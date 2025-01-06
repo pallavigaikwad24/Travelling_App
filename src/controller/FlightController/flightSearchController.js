@@ -1,0 +1,30 @@
+const HTTP_CODE = require("../../services/enum");
+const { FlightModel } = require("../../models");
+const getModelInfo = require("../../services/getModelInfo");
+const logger = require("../../config/logger");
+const { Op } = require("sequelize");
+const { logErrorMessage } = require("../../services/staticMessage");
+
+const flightSearchController = async (req, res) => {
+    try {
+        const { departure_airport, destination_airport, start_date } = req.body;
+        const argument = {
+            modelName: FlightModel,
+            methodType: 'findAll',
+            args: {
+                where: { [Op.and]: [{ departure_airport }, { arrival_airport: destination_airport }] },
+                is_deleted: false
+            }
+        }
+        const allResult = await getModelInfo(argument)
+        return res.status(HTTP_CODE.ACCEPTED.code).send(allResult);
+    } catch (error) {
+        logger.error(logErrorMessage("Searching Hotel"), {
+            method: req.method, url: `${req.get("Host")}${req.originalUrl}`, message: error.message, stack: error.stack,
+        });
+        console.log(error);
+        return res.status(HTTP_CODE.BAD_REQUEST.code).send(HTTP_CODE.BAD_REQUEST.message);
+    }
+}
+
+module.exports = flightSearchController;
