@@ -13,11 +13,11 @@ const route = Router();
 const swaggerSpec = swaggerJSDOC(swaggerConfig);
 route.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
-route.use("/", loginRoute);
-route.use("/", hotelRoute);
-route.use("/", fligtRoute);
-route.use("/", searchRoute);
-route.use("/", firebaseRoute);
-route.use("/", paymentRoute);
+route.use("/user", loginRoute);
+route.use("/hotel", hotelRoute);
+route.use("/flight", fligtRoute);
+route.use("/search", searchRoute);
+route.use("/firebase", firebaseRoute);
+route.use("/payment", paymentRoute);
 
 module.exports = route;

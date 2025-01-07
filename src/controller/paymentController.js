@@ -17,6 +17,7 @@ const paymentController = async (req, res) => {
         const userInfo = await getModelInfo(argument);
 
         const amount = req.body.amount * 100;
+        
         const options = {
             amount,
             currency: process.env.COUNTRY_CODE,
@@ -25,7 +26,7 @@ const paymentController = async (req, res) => {
 
         paymentIntegration.orders.create(options, (err, order) => {
             if (!err) {
-                res.status(HTTP_CODE.OK.code).send({
+               return res.status(HTTP_CODE.OK.code).send({
                     success: true,
                     msg: 'Order Created',
                     order_id: order.id,

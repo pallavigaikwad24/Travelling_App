@@ -64,7 +64,7 @@ const route = Router();
  *         description: Internal server error while searching for hotels.
  */
 
-route.post("/search-hotels", hotelSearchMiddleware(), validationResultFun, hotelSearchController);
+route.post("/hotels", hotelSearchMiddleware(), validationResultFun, hotelSearchController);
 
 /**
  * @swagger
@@ -154,6 +154,6 @@ route.post("/search-hotels", hotelSearchMiddleware(), validationResultFun, hotel
  *         description: Internal server error while searching for flights.
  */
 
-route.post("/search-flight", flightSearchMiddleware(), validationResultFun, flightSearchController);
+route.post("/flights", flightSearchMiddleware(), validationResultFun, flightSearchController);
 
 module.exports = route;

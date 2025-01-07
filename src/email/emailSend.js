@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 const sendMail = (to, subject, text, htmlContent) => {
     const mailOptions = {
-        from: 'codemadeunique@gmail.com',
+        from: process.env.EMAIL_ID,
         to: to,
         subject: subject,
         text: text,
