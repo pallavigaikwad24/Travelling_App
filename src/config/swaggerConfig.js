@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("path")
 
 const options = {
     definition: {
@@ -14,7 +14,7 @@ const options = {
             },
         ],
     },
-    apis: [path.resolve(__dirname, "../routes/**/*.js")],
+    apis: [path.join(__dirname, "../routes/**/*.js")],
 };
 
 module.exports = options;

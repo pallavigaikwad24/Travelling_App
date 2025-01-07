@@ -20,7 +20,7 @@ const route = Router();
  *     requestBody:
  *       required: true
  *       content:
- *       multipart/form-data:
+ *       application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
@@ -33,7 +33,7 @@ const route = Router();
  *       202:
  *         description: Hotels successfully retrieved based on search query.
  *         content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *             schema:
  *               type: array
  *               items:
@@ -79,7 +79,7 @@ route.post("/search-hotels", hotelSearchMiddleware(), validationResultFun, hotel
  *     requestBody:
  *       required: true
  *       content:
- *       multipart/form-data:
+ *       application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
@@ -101,7 +101,7 @@ route.post("/search-hotels", hotelSearchMiddleware(), validationResultFun, hotel
  *       202:
  *         description: Flights successfully retrieved based on search query.
  *         content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *             schema:
  *               type: array
  *               items:

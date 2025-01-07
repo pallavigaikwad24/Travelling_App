@@ -16,7 +16,8 @@ function registrationValidation() {
         body("email")
             .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
             .withMessage(validErrorMessage("Email ID")),
-        body("email").custom(async (value) => {
+        body("email").custom(async (value, { req }) => {
+            console.log("req.body:", req.body);
             if (value?.trim()?.length == 0) throw new Error(requiredErrorMessage("Email ID"));
             const argument = { modelName: User, methodType: "findOne", args: { where: { email: value, is_deleted: false } } };
             const existEmail = await getModelInfo(argument);

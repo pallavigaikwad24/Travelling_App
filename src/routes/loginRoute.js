@@ -21,7 +21,7 @@ const route = Router();
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data::
+ *         application/x-www-form-urlencoded::
  *           schema:
  *             type: object
  *             properties:
@@ -31,9 +31,6 @@ const route = Router();
  *               password:
  *                 type: string
  *                 description: Password of the user.
- *             required:
- *               - username
- *               - password
  *     responses:
  *       202:
  *         description: User successfully logged in and access granted.
@@ -52,7 +49,7 @@ route.post("/login", loginValidation(), validationResultFun, loginPassportMiddle
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data::
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
@@ -68,6 +65,9 @@ route.post("/login", loginValidation(), validationResultFun, loginPassportMiddle
  *               password:
  *                 type: string
  *                 description: The password for the user account (hashed before storing).
+ *               confirm_password:
+ *                 type: string
+ *                 description: The password for the user account (hashed before storing).
  *               country:
  *                 type: string
  *                 description: The country of the user.
@@ -79,6 +79,7 @@ route.post("/login", loginValidation(), validationResultFun, loginPassportMiddle
  *               - last_name
  *               - email
  *               - password
+ *               - confirm_password:
  *               - country
  *               - phone_number
  *     responses:
@@ -101,7 +102,7 @@ route.post("/registration", registrationValidation(), validationResultFun, regis
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data::
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
@@ -135,7 +136,7 @@ route.post("/forgetPassword-email-auth", emailAuthMiddleware(), validationResult
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:

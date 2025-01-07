@@ -24,7 +24,7 @@ const route = Router();
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
@@ -56,7 +56,7 @@ const route = Router();
  *       202:
  *         description: Hotel booking was successfully created.
  *         content:
- *           multipart/form-data:
+ *           application/x-www-form-urlencoded:
  *             schema:
  *               type: object
  *               properties:
@@ -105,7 +105,7 @@ route.post("/hotel-booking", isAuth, hotelBookingMiddleware(), validationResultF
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
@@ -145,7 +145,7 @@ route.post("/hotel-booking", isAuth, hotelBookingMiddleware(), validationResultF
  *       202:
  *         description: Hotel successfully added.
  *         content:
- *           multipart/form-data:
+ *           application/x-www-form-urlencoded:
  *             schema:
  *               type: object
  *               properties:
@@ -269,7 +269,7 @@ route.delete("/deleting-hotel-booking", isAuth, deleteHotelBookingController);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:

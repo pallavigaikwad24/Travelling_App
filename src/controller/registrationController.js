@@ -11,6 +11,7 @@ const { emailverficationMessage, logErrorMessage } = require("../services/static
 const registrationController = async (req, res) => {
     try {
         const { first_name, last_name, email, password, country, phone_number } = req.body;
+        console.log("req.body:", req.body);
         const token = uuidv4();
         sendMail(
             email,

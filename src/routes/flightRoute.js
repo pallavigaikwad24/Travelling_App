@@ -25,7 +25,7 @@ const route = Router();
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
@@ -99,7 +99,7 @@ route.post("/add-flight", isAuth, flightMiddleware(), validationResultFun, fligh
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
@@ -206,7 +206,7 @@ route.delete("/deleting-flight-booking", isAuth, deleteFlightBookingController);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/x-www-form-urlencoded:
  *           schema:
  *             type: object
  *             properties:
