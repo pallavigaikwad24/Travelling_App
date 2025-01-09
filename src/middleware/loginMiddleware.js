@@ -11,7 +11,6 @@ function getArgument(value, param) {
         methodType: "findOne",
         args: { where: { [param]: value, is_deleted: false } }
     }
-
     return arguments;
 }
 

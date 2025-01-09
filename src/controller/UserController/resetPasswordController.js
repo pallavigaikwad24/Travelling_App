@@ -1,11 +1,11 @@
-const HTTP_CODE = require("../services/enum");
+const HTTP_CODE = require("../../services/enum");
 const { where } = require("sequelize");
-const { User, PasswordResetToken } = require("../models");
-const { sendMail } = require("../email/emailSend");
+const { User, PasswordResetToken } = require("../../models");
+const { sendMail } = require("../../email/emailSend");
 const { v4: uuidv4 } = require("uuid");
-const getModelInfo = require("../services/getModelInfo");
-const logger = require("../config/logger");
-const { logErrorMessage } = require("../services/staticMessage");
+const getModelInfo = require("../../services/getModelInfo");
+const logger = require("../../config/logger");
+const { logErrorMessage } = require("../../services/staticMessage");
 
 const emailHtml = (host, token) => `
 <!DOCTYPE html>

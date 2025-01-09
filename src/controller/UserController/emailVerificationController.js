@@ -1,9 +1,9 @@
 const { where } = require("sequelize");
-const HTTP_CODE = require("../services/enum");
-const { User, EmailVerificationToken } = require("../models");
-const getModelInfo = require("../services/getModelInfo");
-const logger = require("../config/logger");
-const { logErrorMessage } = require("../services/staticMessage");
+const HTTP_CODE = require("../../services/enum");
+const { User, EmailVerificationToken } = require("../../models");
+const getModelInfo = require("../../services/getModelInfo");
+const logger = require("../../config/logger");
+const { logErrorMessage } = require("../../services/staticMessage");
 
 const emailVerificationController = async (req, res) => {
     try {

@@ -1,12 +1,12 @@
-const HTTP_CODE = require("../services/enum");
-const { User, EmailVerificationToken } = require("../models");
+const HTTP_CODE = require("../../services/enum");
+const { User, EmailVerificationToken } = require("../../models");
 const bcrypt = require("bcrypt");
-const getModelInfo = require("../services/getModelInfo");
-const logger = require("../config/logger");
-const emailVerificationHtmlTemplate = require("../utils/emailVerificationHtmlTemplate");
+const getModelInfo = require("../../services/getModelInfo");
+const logger = require("../../config/logger");
+const emailVerificationHtmlTemplate = require("../../utils/emailVerificationHtmlTemplate");
 const { v4: uuidv4 } = require("uuid");
-const { sendMail } = require("../email/emailSend");
-const { emailverficationMessage, logErrorMessage } = require("../services/staticMessage");
+const { sendMail } = require("../../email/emailSend");
+const { emailverficationMessage, logErrorMessage } = require("../../services/staticMessage");
 
 const registrationController = async (req, res) => {
     try {

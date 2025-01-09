@@ -1,10 +1,10 @@
-const logger = require("../config/logger");
-const HTTP_CODE = require("../services/enum");
-const paymentIntegration = require("../services/paymentIntegration");
-const { logErrorMessage } = require("../services/staticMessage");
-const { User } = require("../models");
+const logger = require("../../config/logger");
+const HTTP_CODE = require("../../services/enum");
+const paymentIntegration = require("../../services/paymentIntegration");
+const { logErrorMessage } = require("../../services/staticMessage");
+const { User } = require("../../models");
 const { where } = require("sequelize");
-const getModelInfo = require("../services/getModelInfo");
+const getModelInfo = require("../../services/getModelInfo");
 require("dotenv").config();
 
 const paymentController = async (req, res) => {

@@ -18,6 +18,6 @@ route.use("/hotel", hotelRoute);
 route.use("/flight", fligtRoute);
 route.use("/search", searchRoute);
 route.use("/firebase", firebaseRoute);
-route.use("/payment", paymentRoute);
+route.use("/payment", paymentRoute); 
 
 module.exports = route;

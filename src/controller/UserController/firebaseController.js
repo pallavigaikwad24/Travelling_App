@@ -1,6 +1,6 @@
-const { FirebaseNotificationToken } = require("../models");
-const HTTP_CODE = require("../services/enum");
-const getModelInfo = require("../services/getModelInfo");
+const { FirebaseNotificationToken } = require("../../models");
+const HTTP_CODE = require("../../services/enum");
+const getModelInfo = require("../../services/getModelInfo");
 
 const saveToken = async (req, res) => {
     try {

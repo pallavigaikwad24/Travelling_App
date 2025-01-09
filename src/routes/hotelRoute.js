@@ -9,7 +9,11 @@ const deleteHotelController = require("../controller/HotelController/deleteHotel
 const cancellingHotelBookingController = require("../controller/HotelController/cancellingHotelBookingController");
 const updateHotelController = require("../controller/HotelController/updateHotelController");
 const deleteHotelBookingController = require("../controller/HotelController/deleteHotelBookingController");
+const hotelRecordsController = require("../controller/HotelController/HotelRecordsController");
+const hotelSearchMiddleware = require("../middleware/hotelSearchMiddleware");
 const route = Router();
+
+route.post("/gethotels", hotelRecordsController);
 
 /**
  * @swagger

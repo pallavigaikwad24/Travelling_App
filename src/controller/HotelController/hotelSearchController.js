@@ -3,16 +3,27 @@ const { HotelModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
 const { logErrorMessage } = require("../../services/staticMessage");
+const { Op } = require("sequelize");
 
 const hotelSearchController = async (req, res) => {
     try {
-        const { name } = req.body;
+        const { name, topTenRecord } = req.body;
+        let allResult = null;
+        if (topTenRecord) {
+            const argument = {
+                modelName: HotelModel,
+                methodType: 'findAll',
+                args: { where: { [Op.or]: [{ name }, { country: name }], is_deleted: false }, offset: 0, limit: 10 }
+            }
+            allResult = await getModelInfo(argument);
+            return res.status(HTTP_CODE.ACCEPTED.code).send(allResult);
+        }
         const argument = {
             modelName: HotelModel,
             methodType: 'findAll',
-            args: { where: { name }, is_deleted: false }
+            args: { where: { [Op.or]: [{ name }, { country: name }], is_deleted: false } }
         }
-        const allResult = await getModelInfo(argument)
+        allResult = await getModelInfo(argument)
         return res.status(HTTP_CODE.ACCEPTED.code).send(allResult);
     } catch (error) {
         logger.error(logErrorMessage("Searching Hotel"), {

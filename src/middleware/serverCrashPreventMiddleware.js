@@ -1,3 +1,4 @@
+const logger = require("../config/logger");
 const HTTP_CODE = require("../services/enum");
 
 const serverCrashPreventMiddleware = (err, req, res, next) => {

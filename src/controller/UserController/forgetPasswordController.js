@@ -1,10 +1,10 @@
-const { User, PasswordResetToken } = require("../models");
+const { User, PasswordResetToken } = require("../../models");
 const { where, Op } = require("sequelize");
 const bcrypt = require("bcrypt");
-const getModelInfo = require("../services/getModelInfo");
-const HTTP_CODE = require("../services/enum");
-const { expireTokenErrorMessage, logErrorMessage } = require("../services/staticMessage");
-const logger = require("../config/logger");
+const getModelInfo = require("../../services/getModelInfo");
+const HTTP_CODE = require("../../services/enum");
+const { expireTokenErrorMessage, logErrorMessage } = require("../../services/staticMessage");
+const logger = require("../../config/logger");
 
 const forgetPasswordController = async (req, res) => {
     try {

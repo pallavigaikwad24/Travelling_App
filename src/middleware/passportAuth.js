@@ -8,7 +8,7 @@ const router = Router();
 
 initializationPassport(passport);
 router.use(passport.initialize());
-router.use(session({ key: "user_session", sessionStore, secret: process.env.SECRET_KEY, resave: false, saveUninitialized: false }));
+router.use(session({ key: "user_session", store: sessionStore, secret: process.env.SECRET_KEY, resave: false, saveUninitialized: false }));
 router.use(passport.session());
 router.use(cookieParser());
 

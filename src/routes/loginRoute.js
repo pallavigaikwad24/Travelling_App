@@ -1,15 +1,15 @@
 const { Router } = require("express");
-const loginController = require("../controller/loginController");
+const loginController = require("../controller/UserController/loginController");
 const loginValidation = require("../middleware/loginMiddleware");
 const validationResultFun = require("../middleware/validationFun");
 const registrationValidation = require("../middleware/registrationMiddleware");
-const registrationController = require("../controller/registrationController");
+const registrationController = require("../controller/UserController/registrationController");
 const { loginPassportMiddleware } = require("../middleware/loginPassportMiddleware");
 const emailAuthMiddleware = require("../middleware/emailAuthMiddleware");
-const emailAuthController = require("../controller/resetPasswordController");
-const forgetPasswordController = require("../controller/forgetPasswordController");
+const emailAuthController = require("../controller/UserController/resetPasswordController");
+const forgetPasswordController = require("../controller/UserController/forgetPasswordController");
 const forgetPasswordMiddlware = require("../middleware/forgetPasswordMiddleware");
-const emailVerificationController = require("../controller/emailVerificationController");
+const emailVerificationController = require("../controller/UserController/emailVerificationController");
 const route = Router();
 
 /**
@@ -18,6 +18,8 @@ const route = Router();
  *   post:
  *     summary: Login a user
  *     description: Logs in an existing user and returns an accepted status.
+ *     tags:
+ *       - User
  *     requestBody:
  *       required: true
  *       content:
@@ -46,6 +48,8 @@ route.post("/login", loginValidation(), validationResultFun, loginPassportMiddle
  *   post:
  *     summary: Register a new user
  *     description: Allows a new user to register by providing their personal details and email verification.
+ *     tags:
+ *       - User
  *     requestBody:
  *       required: true
  *       content:
@@ -99,6 +103,8 @@ route.post("/registration", registrationValidation(), validationResultFun, regis
  *   post:
  *     summary: Send password reset email
  *     description: Sends a password reset email to the user, allowing them to update their password.
+ *     tags:
+ *       - User
  *     requestBody:
  *       required: true
  *       content:
@@ -126,6 +132,8 @@ route.post("/forgetPassword-email-auth", emailAuthMiddleware(), validationResult
  *   post:
  *     summary: Reset the password for a user
  *     description: This endpoint allows a user to reset their password using a valid token sent to their email.
+ *     tags:
+ *       - User
  *     parameters:
  *       - in: path
  *         name: token
@@ -164,6 +172,8 @@ route.post("/forgetpassword/:token", forgetPasswordMiddlware(), validationResult
  *   post:
  *     summary: Verify the user's email address
  *     description: This endpoint allows a user to verify their email address by using a valid verification token.
+ *     tags:
+ *       - User
  *     parameters:
  *       - in: path
  *         name: token

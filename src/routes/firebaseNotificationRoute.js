@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { saveToken, getTokenController } = require("../controller/firebaseController");
+const { saveToken, getTokenController } = require("../controller/UserController/firebaseController");
 const { isAuth } = require("../middleware/loginPassportMiddleware");
 const route = Router();
 

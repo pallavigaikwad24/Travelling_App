@@ -3,7 +3,7 @@ const route = require("./src/routes/index.js");
 const app = express();
 require("dotenv").config();
 const passportAuthMiddleware = require("./src/middleware/passportAuth.js")
-const pageNotFoundController = require("./src/controller/pageNotFoundMiddleware.js");
+const pageNotFoundController = require("./src/controller/pageNotFoundController.js");
 const serverCrashPreventMiddleware = require("./src/middleware/serverCrashPreventMiddleware.js");
 
 app.use(express.urlencoded({ extended: false }));
