@@ -14,7 +14,7 @@ const route = Router();
 
 /**
  * @swagger
- * /login:
+ * /user/login:
  *   post:
  *     summary: Login a user
  *     description: Logs in an existing user and returns an accepted status.
@@ -44,7 +44,7 @@ route.post("/login", loginValidation(), validationResultFun, loginPassportMiddle
 
 /**
  * @swagger
- * /registration:
+ * /user/registration:
  *   post:
  *     summary: Register a new user
  *     description: Allows a new user to register by providing their personal details and email verification.
@@ -99,7 +99,7 @@ route.post("/registration", registrationValidation(), validationResultFun, regis
 
 /**
  * @swagger
- * /forgetPassword-email-auth:
+ * /user/forgetPassword-email-auth:
  *   post:
  *     summary: Send password reset email
  *     description: Sends a password reset email to the user, allowing them to update their password.
@@ -128,7 +128,7 @@ route.post("/forgetPassword-email-auth", emailAuthMiddleware(), validationResult
 
 /**
  * @swagger
- * /forgetpassword/{token}:
+ * /user/forgetpassword/{token}:
  *   post:
  *     summary: Reset the password for a user
  *     description: This endpoint allows a user to reset their password using a valid token sent to their email.
@@ -168,7 +168,7 @@ route.post("/forgetpassword/:token", forgetPasswordMiddlware(), validationResult
 
 /**
  * @swagger
- * /email-verification/{token}:
+ * /user/email-verification/{token}:
  *   post:
  *     summary: Verify the user's email address
  *     description: This endpoint allows a user to verify their email address by using a valid verification token.

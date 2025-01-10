@@ -2,37 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('LoginAuthModels', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      first_name: {
-        type: Sequelize.TEXT
+      user_id: {
+        type: Sequelize.INTEGER
       },
-      last_name: {
-        type: Sequelize.TEXT
+      failed_attempts: {
+        type: Sequelize.INTEGER
       },
-      email: {
-        type: Sequelize.TEXT
-      },
-      password: {
-        type: Sequelize.TEXT
-      },
-      country: {
-        type: Sequelize.TEXT
-      },
-      phone_number: {
-        type: Sequelize.TEXT
-      },
-      user_type:{
-        type: Sequelize.TEXT
-      },
-      is_verified: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+      lock_until: {
+        type: Sequelize.DATE
       },
       is_deleted: {
         type: Sequelize.BOOLEAN,
@@ -49,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('LoginAuthModels');
   }
 };

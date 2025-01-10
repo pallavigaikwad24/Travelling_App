@@ -10,8 +10,7 @@ const { emailverficationMessage, logErrorMessage } = require("../../services/sta
 
 const registrationController = async (req, res) => {
     try {
-        const { first_name, last_name, email, password, country, phone_number } = req.body;
-        console.log("req.body:", req.body);
+        const { first_name, last_name, email, password, country, phone_number, user_type } = req.body;
         const token = uuidv4();
         sendMail(
             email,
@@ -24,7 +23,7 @@ const registrationController = async (req, res) => {
         const argument = {
             modelName: User,
             methodType: 'create',
-            args: { first_name, last_name, email, password: bcrypt.hashSync(password, 10), country, phone_number }
+            args: { first_name, last_name, email, password: bcrypt.hashSync(password, 10), country, phone_number, user_type }
         }
         const newUser = await getModelInfo(argument);
         const tokenArgument = {

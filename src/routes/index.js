@@ -11,13 +11,14 @@ const swaggerConfig = require("../config/swaggerConfig.js");
 const route = Router();
 
 const swaggerSpec = swaggerJSDOC(swaggerConfig);
-route.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+if (process.env.NODE_ENV == 'development')
+    route.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 route.use("/user", loginRoute);
 route.use("/hotel", hotelRoute);
 route.use("/flight", fligtRoute);
 route.use("/search", searchRoute);
 route.use("/firebase", firebaseRoute);
-route.use("/payment", paymentRoute); 
+route.use("/payment", paymentRoute);
 
 module.exports = route;

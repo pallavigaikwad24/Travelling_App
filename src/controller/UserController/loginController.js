@@ -1,22 +1,30 @@
 const logger = require("../../config/logger");
 const HTTP_CODE = require("../../services/enum");
-const { User } = require("../../models");
+const { User, LoginAuthModel } = require("../../models");
 const { logErrorMessage, isEmailVerificationErrorMessage } = require("../../services/staticMessage");
 const getModelInfo = require("../../services/getModelInfo");
+const { where } = require("sequelize");
 
 function getArgument(value, param) {
     const arguments = {
         modelName: User,
         methodType: "findOne",
-        args: { where: { [param]: value, is_deleted: false }, attributes: ['is_verified'] }
+        args: { where: { [param]: value, is_deleted: false } }
     }
     return arguments;
 }
 
-
 const loginController = async (req, res) => {
     try {
         const { username } = req.body;
+
+        const updateArgs = {
+            modelName: LoginAuthModel,
+            methodType: 'update',
+            args: [{ failed_attempts: 0 }, { where: { user_id: req.user.id } }]
+        }
+        await getModelInfo(updateArgs);
+
         let argument = null;
         if (parseInt(username)) {
             argument = getArgument(username, "phone_number");
@@ -26,7 +34,7 @@ const loginController = async (req, res) => {
         const userInfo = await getModelInfo(argument);
         if (!userInfo.is_verified) return res.status(HTTP_CODE.FORBIDDEN.code).send(isEmailVerificationErrorMessage());
 
-        return res.status(HTTP_CODE.ACCEPTED.code).send(HTTP_CODE.ACCEPTED.message);
+        return res.status(HTTP_CODE.ACCEPTED.code).send(userInfo);
     } catch (error) {
         logger.error(logErrorMessage("Login"), {
             method: req.method,

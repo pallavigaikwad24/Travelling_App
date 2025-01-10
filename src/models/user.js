@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.FlightModel, {
         foreignKey: "owner_id"
       });
+
+      User.hasOne(models.LoginAuthModel, {
+        foreignKey: 'user_id'
+      })
     }
   }
   User.init({
@@ -36,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.TEXT,
     country: DataTypes.TEXT,
     phone_number: DataTypes.TEXT,
+    user_type: DataTypes.TEXT,
     is_verified: DataTypes.BOOLEAN,
     is_deleted: DataTypes.BOOLEAN,
   }, {

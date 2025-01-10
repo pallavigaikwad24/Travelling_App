@@ -12,9 +12,12 @@ const emailverficationMessage = (value, service) => `${value} has been sent for 
 Please complete the verification process to confirm your ${service}.`;
 const logErrorMessage = (value) => `Error during ${value}!`;
 const isEmailVerificationErrorMessage = () => `Your email address is not verified. Please verify your email to proceed with opening your account.`
+const isUserType = () => 'Please select valid User Type!';
+const loginFailedErrMsg = (lockTime) => `Your account has been temporarily locked due to multiple unsuccessful login attempts. 
+Please try again after ${lockTime} minutes, or reset your password if you've forgotten it.`
 
 module.exports = {
     requiredErrorMessage, validErrorMessage, existErrorMessage, passwordErrorMessage, confirmMatchErrorMessage,
     notExistErrorMessage, notAvailableErrorMessage, availableErrorMessage, expireTokenErrorMessage, emailverficationMessage,
-    logErrorMessage, isEmailVerificationErrorMessage
+    logErrorMessage, isEmailVerificationErrorMessage, isUserType, loginFailedErrMsg
 };

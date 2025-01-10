@@ -9,7 +9,7 @@ const route = Router();
 
 /**
  * @swagger
- * /search-hotels:
+ * /search/hotels:
  *   post:
  *     summary: Search for hotels by name
  *     description: Allows users to search for hotels by their name. Returns all hotels that match the search query and are not marked as deleted.
@@ -68,7 +68,7 @@ route.post("/hotels", hotelSearchMiddleware(), validationResultFun, hotelSearchC
 
 /**
  * @swagger
- * /search-flight:
+ * /search/flight:
  *   post:
  *     summary: Search for flights by departure and destination airports
  *     description: Allows users to search for flights by specifying departure and destination airports. Returns all flights that match the search criteria and are not marked as deleted.

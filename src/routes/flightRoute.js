@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const flightController = require("../controller/FlightController/flightController");
 const flightBookingController = require("../controller/FlightController/flightBookingController");
-const { isAuth } = require("../middleware/loginPassportMiddleware");
+const { isAuth, isAdmin } = require("../middleware/loginPassportMiddleware");
 const flightMiddleware = require("../middleware/flightMiddleware");
 const flightBookingMiddleware = require("../middleware/flightBookingMiddleware");
 const validationResultFun = require("../middleware/validationFun");
@@ -14,7 +14,7 @@ const route = Router();
 
 /**
  * @swagger
- * /add-flight:
+ * /flight/add-flight:
  *   post:
  *     summary: Add a new flight
  *     description: Allows the owner to add a new flight to the system, providing flight details such as flight number, airline, departure and arrival details, and seat availability.
@@ -84,11 +84,11 @@ const route = Router();
  *         description: Internal server error while adding flight information.
  */
 
-route.post("/add-flight", isAuth, flightMiddleware(), validationResultFun, flightController);
+route.post("/add-flight", isAuth, isAdmin, flightMiddleware(), validationResultFun, flightController);
 
 /**
  * @swagger
- * /flight-booking:
+ * /flight/flight-booking:
  *   post:
  *     summary: Book a flight
  *     description: Allows the user to book a flight by providing flight details such as the flight ID, number of seats, and total price.
@@ -130,7 +130,7 @@ route.post("/flight-booking", isAuth, flightBookingMiddleware(), validationResul
 
 /**
  * @swagger
- * /delete-flight-info:
+ * /flight/delete-flight-info:
  *   delete:
  *     summary: Delete a flight
  *     description: Allows the owner to delete a flight from the system by marking it as deleted. Only the owner of the flight can perform this action.
@@ -147,11 +147,11 @@ route.post("/flight-booking", isAuth, flightBookingMiddleware(), validationResul
  *         description: Forbidden. The user is not authorized to delete the flight.
  */
 
-route.delete("/delete-flight-info", isAuth, deleteFlightController);
+route.delete("/delete-flight-info", isAuth, isAdmin, deleteFlightController);
 
 /**
  * @swagger
- * /canceling-flight-booking:
+ * /flight/canceling-flight-booking:
  *   patch:
  *     summary: Cancel a flight booking
  *     description: Allows the user to cancel their flight booking by updating the booking status to false.
@@ -172,7 +172,7 @@ route.patch("/canceling-flight-booking", isAuth, cancellingFlightBookingControll
 
 /**
  * @swagger
- * /deleting-flight-booking:
+ * /flight/deleting-flight-booking:
  *   delete:
  *     summary: Delete a flight booking
  *     description: Allows the owner to delete a flight booking by updating its status to "deleted". Only the owner of the flight can delete bookings for it.
@@ -191,11 +191,11 @@ route.patch("/canceling-flight-booking", isAuth, cancellingFlightBookingControll
  *         description: Flight not found for the user.
  */
 
-route.delete("/deleting-flight-booking", isAuth, deleteFlightBookingController);
+route.delete("/deleting-flight-booking", isAuth, isAdmin, deleteFlightBookingController);
 
 /**
  * @swagger
- * /update-flight-info:
+ * /flight/update-flight-info:
  *   put:
  *     summary: Update flight information
  *     description: Allows the owner to update details of an existing flight, including flight number, airline, departure and arrival details, price, and available seats.

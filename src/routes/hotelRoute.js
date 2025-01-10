@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const hotelBookingController = require("../controller/HotelController/hotelBookingController");
 const hotelController = require("../controller/HotelController/hotelController");
-const { isAuth } = require("../middleware/loginPassportMiddleware");
+const { isAuth, isAdmin } = require("../middleware/loginPassportMiddleware");
 const hotelValidation = require("../middleware/hotelMiddleware");
 const validationResultFun = require("../middleware/validationFun");
 const hotelBookingMiddleware = require("../middleware/hotelBookingMiddleware");
@@ -17,7 +17,7 @@ route.post("/gethotels", hotelRecordsController);
 
 /**
  * @swagger
- * /hotel-booking:
+ * /hotel/hotel-booking:
  *   post:
  *     summary: Book a hotel room
  *     description: Allows a user to book a hotel room by providing necessary details such as check-in and check-out dates, number of rooms, and total price.
@@ -98,7 +98,7 @@ route.post("/hotel-booking", isAuth, hotelBookingMiddleware(), validationResultF
 
 /**
  * @swagger
- * /add-hotel:
+ * /hotel/add-hotel:
  *   post:
  *     summary: Add a new hotel
  *     description: Allows an authenticated user to add a new hotel with details like name, location, address, country, price per night, available rooms, and services.
@@ -189,11 +189,11 @@ route.post("/hotel-booking", isAuth, hotelBookingMiddleware(), validationResultF
  *         description: Internal server error or unexpected error while adding the hotel.
  */
 
-route.post("/add-hotel", isAuth, hotelValidation(), validationResultFun, hotelController);
+route.post("/add-hotel", isAuth, isAdmin, hotelValidation(), validationResultFun, hotelController);
 
 /**
  * @swagger
- * /delete-hotel-info:
+ * /hotel/delete-hotel-info:
  *   delete:
  *     summary: Delete a hotel's information
  *     description: Allows an authenticated user to mark a hotel's information as deleted by setting the `is_deleted` field to `true`. Only the owner of the hotel can delete their hotel.
@@ -212,11 +212,11 @@ route.post("/add-hotel", isAuth, hotelValidation(), validationResultFun, hotelCo
  *         description: Internal server error or unexpected error while deleting the hotel information.
  */
 
-route.delete("/delete-hotel-info", isAuth, deleteHotelController);
+route.delete("/delete-hotel-info", isAuth, isAdmin, deleteHotelController);
 
 /**
  * @swagger
- * /canceling-hotel-booking:
+ * /hotel/canceling-hotel-booking:
  *   patch:
  *     summary: Cancel a hotel booking
  *     description: Allows an authenticated user to cancel their hotel booking. Updates the booking status to `false` and sends a cancellation notification to the user.
@@ -239,7 +239,7 @@ route.patch("/canceling-hotel-booking", isAuth, cancellingHotelBookingController
 
 /**
  * @swagger
- * /deleting-hotel-booking:
+ * /hotel/deleting-hotel-booking:
  *   delete:
  *     summary: Delete a hotel booking
  *     description: Allows an authenticated user to delete their hotel booking. Only the owner of the hotel can delete bookings associated with their hotel.
@@ -258,11 +258,11 @@ route.patch("/canceling-hotel-booking", isAuth, cancellingHotelBookingController
  *         description: Internal server error or unexpected error during deletion.
  */
 
-route.delete("/deleting-hotel-booking", isAuth, deleteHotelBookingController);
+route.delete("/deleting-hotel-booking", isAuth, isAdmin, deleteHotelBookingController);
 
 /**
  * @swagger
- * /update-hotel-info:
+ * /hotel/update-hotel-info:
  *   put:
  *     summary: Update hotel information
  *     description: Allows the owner to update the details of their hotel, such as name, location, price, available rooms, and services.
@@ -312,6 +312,6 @@ route.delete("/deleting-hotel-booking", isAuth, deleteHotelBookingController);
  *         description: Internal server error or unexpected error while updating hotel information.
  */
 
-route.put("/update-hotel-info", isAuth, hotelValidation(), validationResultFun, updateHotelController);
+route.put("/update-hotel-info", isAuth, isAdmin, hotelValidation(), validationResultFun, updateHotelController);
 
 module.exports = route;
