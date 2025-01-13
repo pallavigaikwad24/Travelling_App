@@ -1,6 +1,7 @@
 const express = require("express");
 const route = require("./src/routes/index.js");
 const app = express();
+const path = require("path");
 require("dotenv").config();
 const passportAuthMiddleware = require("./src/middleware/passportAuth.js")
 const pageNotFoundController = require("./src/controller/pageNotFoundController.js");
@@ -9,6 +10,7 @@ const { setupLogging } = require("./src/middleware/setlog.js");
 setupLogging();
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(passportAuthMiddleware)
 app.use(serverCrashPreventMiddleware);
 app.use(route);

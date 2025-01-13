@@ -1,8 +1,8 @@
 const { body } = require("express-validator");
 const { requiredErrorMessage, validErrorMessage, availableErrorMessage } = require("../services/staticMessage");
-const { FlightBookingModel, FlightModel } = require("../models");
 const getModelInfo = require("../services/getModelInfo");
 const { where, Op } = require("sequelize");
+const { FlightBookingModel } = require("../models");
 
 function flightBookingMiddleware() {
     return [
@@ -13,7 +13,7 @@ function flightBookingMiddleware() {
             .withMessage(validErrorMessage("Flight ID"))
             .custom(async (value) => {
                 const argument = {
-                    modelName: FlightModel,
+                    modelName: 'FlightModel',
                     methodType: "findOne",
                     args: { where: { id: value, is_deleted: false } }
                 };
@@ -30,7 +30,7 @@ function flightBookingMiddleware() {
         body("number_of_seats").custom(async (value, { req }) => {
             const flightId = req.body.flight_id;
             const getAvailableFlights = {
-                modelName: FlightModel, methodType: 'findOne',
+                modelName: 'FlightModel', methodType: 'findOne',
                 args: {
                     where: { id: flightId, is_deleted: false },
                     include: [{ model: FlightBookingModel, attributes: ['flight_id', 'number_of_seats'] }]

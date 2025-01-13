@@ -1,6 +1,5 @@
 const { where } = require("sequelize");
 const HTTP_CODE = require("../../services/enum");
-const { HotelModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const { logErrorMessage } = require("../../services/staticMessage");
 
@@ -9,7 +8,7 @@ const updateHotelController = async (req, res) => {
 
         const { name, location, count, price_per_night, available_rooms, services } = req.body;
         const argument = {
-            modelName: HotelModel,
+            modelName: 'HotelModel',
             methodType: 'update',
             args: [
                 { name, location, count, price_per_night, available_rooms, services },

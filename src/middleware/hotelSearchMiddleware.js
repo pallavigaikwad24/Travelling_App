@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 const { requiredErrorMessage, notAvailableErrorMessage, validErrorMessage, availableErrorMessage, notExistErrorMessage } = require("../services/staticMessage");
-const { HotelModel, HotelBookingModel } = require("../models");
+const { HotelBookingModel } = require("../models");
 const { where, Op } = require("sequelize");
 const getModelInfo = require("../services/getModelInfo");
 
@@ -11,7 +11,7 @@ const hotelSearchMiddleware = () => {
         body("name").custom(async (value, { req }) => {
             if (value?.trim()?.length == 0) throw new Error(requiredErrorMessage("Search Name"));
             const argument = {
-                modelName: HotelModel,
+                modelName: 'HotelModel',
                 methodType: "findAll",
                 args: { where: { [Op.or]: [{ name: value }, { country: value }], is_deleted: false } }
             }
@@ -23,7 +23,7 @@ const hotelSearchMiddleware = () => {
         body("start_date").notEmpty().withMessage(requiredErrorMessage("Start Date")),
         body("start_date").custom(async (value, { req }) => {
             const argument = {
-                modelName: HotelModel,
+                modelName: 'HotelModel',
                 methodType: 'findOne',
                 args: {
                     where: { [Op.or]: [{ name: req.body.name }, { country: req.body.name }], is_deleted: false },
@@ -37,7 +37,7 @@ const hotelSearchMiddleware = () => {
             if (!info) throw new Error(notExistErrorMessage(req.body.name, "").split(",")[0]);
 
             const getAvailableRooms = {
-                modelName: HotelModel, methodType: 'findOne',
+                modelName: 'HotelModel', methodType: 'findOne',
                 args: { attributes: ['available_rooms'], where: { id: info?.id, is_deleted: false } }
             }
             const availbleRoomCount = await getModelInfo(getAvailableRooms);

@@ -1,4 +1,3 @@
-const { User, PasswordResetToken } = require("../../models");
 const { where, Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const getModelInfo = require("../../services/getModelInfo");
@@ -13,7 +12,7 @@ const forgetPasswordController = async (req, res) => {
         const email = req.session.email;
 
         const findOneArguments = {
-            modelName: PasswordResetToken, methodType: "findOne",
+            modelName: 'PasswordResetToken', methodType: "findOne",
             args: { where: { token, expireToken: { [Op.gt]: Date.now() }, is_deleted: false } },
         };
 
@@ -23,7 +22,7 @@ const forgetPasswordController = async (req, res) => {
 
         } else {
             const updateArguments = {
-                modelName: User,
+                modelName: 'User',
                 methodType: "update",
                 args: [{ password: bcrypt.hashSync(password, 8) }, { where: { email, is_deleted: false } }],
             };

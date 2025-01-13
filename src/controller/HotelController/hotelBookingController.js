@@ -1,5 +1,4 @@
 const HTTP_CODE = require("../../services/enum");
-const { HotelBookingModel, HotelModel, FirebaseNotificationToken } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
 const { sendMail } = require("../../email/emailSend");
@@ -14,7 +13,7 @@ const hotelBookingController = async (req, res) => {
         const { hotel_id, check_in_date, check_out_date, number_of_rooms, total_price } = req.body;
 
         const getHotelInfoArgument = {
-            modelName: HotelModel,
+            modelName: 'HotelModel',
             methodType: 'findOne',
             args: { attributes: ['price_per_night'], where: { id: hotel_id, is_deleted: false } }
         }
@@ -22,7 +21,7 @@ const hotelBookingController = async (req, res) => {
         const hotelInfo = await getModelInfo(getHotelInfoArgument);
 
         const arguments = {
-            modelName: HotelBookingModel,
+            modelName: 'HotelBookingModel',
             methodType: 'create',
             args: {
                 user_id: req.user.id, hotel_id, check_in_date, check_out_date, number_of_rooms,
@@ -31,7 +30,7 @@ const hotelBookingController = async (req, res) => {
         }
         const newHotelBooking = await getModelInfo(arguments);
         const getHotelInfoArgs = {
-            modelName: HotelModel,
+            modelName: 'HotelModel',
             methodType: 'findOne',
             args: { where: newHotelBooking.hotel_id, attributes: ['name'], is_deleted: false }
         }
@@ -44,7 +43,7 @@ const hotelBookingController = async (req, res) => {
         );
 
         const notifyArgument = {
-            modelName: FirebaseNotificationToken,
+            modelName: 'FirebaseNotificationToken',
             methodType: "findOne",
             args: { where: { user_id: req.user.id, is_deleted: false } },
         };

@@ -1,5 +1,4 @@
 const HTTP_CODE = require("../../services/enum");
-const { HotelModel } = require("../../models");
 const { where } = require("sequelize");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
@@ -8,7 +7,7 @@ const { logErrorMessage } = require("../../services/staticMessage");
 const deleteHotelController = async (req, res) => {
     try {
         const argument = {
-            modelName: HotelModel, methodType: 'update', args: [{ is_deleted: true }, { where: { owner_id: req.user.id } }]
+            modelName: 'HotelModel', methodType: 'update', args: [{ is_deleted: true }, { where: { owner_id: req.user.id } }]
         }
         await getModelInfo(argument);
         return res.status(HTTP_CODE.NO_CONTENT.code).send(HTTP_CODE.NO_CONTENT.message)

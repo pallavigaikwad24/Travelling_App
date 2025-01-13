@@ -1,5 +1,4 @@
 const HTTP_CODE = require("../../services/enum");
-const { User, EmailVerificationToken } = require("../../models");
 const bcrypt = require("bcrypt");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
@@ -21,13 +20,13 @@ const registrationController = async (req, res) => {
         );
 
         const argument = {
-            modelName: User,
+            modelName: 'User',
             methodType: 'create',
             args: { first_name, last_name, email, password: bcrypt.hashSync(password, 10), country, phone_number, user_type }
         }
         const newUser = await getModelInfo(argument);
         const tokenArgument = {
-            modelName: EmailVerificationToken,
+            modelName: 'EmailVerificationToken',
             methodType: 'create',
             args: { user_id: newUser?.id, token: token }
         }

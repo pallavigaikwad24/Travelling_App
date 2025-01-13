@@ -1,5 +1,5 @@
 const { Strategy } = require("passport-local");
-const { User } = require("../models");
+const CustomeStrategy = require("passport-custom").Strategy;
 const { Op } = require("sequelize");
 const getModelInfo = require("../services/getModelInfo");
 const { validErrorMessage } = require("../services/staticMessage");
@@ -10,11 +10,7 @@ const initializationPassport = (passport) => {
         new Strategy(async (username, password, done) => {
             try {
                 const params = parseInt(username) ? { phone_number: username } : { email: username };
-                const argument = {
-                    modelName: User,
-                    methodType: "findOne",
-                    args: { where: { [Op.or]: [params], is_deleted: false } }
-                }
+                const argument = { modelName: 'User', methodType: "findOne", args: { where: [params], is_deleted: false } };
                 const user = await getModelInfo(argument);
                 if (!user)
                     return done(null, false, { message: validErrorMessage("Phone Number or Email ID") });
@@ -32,6 +28,22 @@ const initializationPassport = (passport) => {
         })
     );
 
+    passport.use('otpLogin', new CustomeStrategy(async (req, done) => {
+        try {
+            const username = req.params.email;
+            const argument = { modelName: 'User', methodType: "findOne", args: { where: { email: username, is_deleted: false } } }
+            const user = await getModelInfo(argument);
+            if (!user)
+                return done(null, false, { message: validErrorMessage("Email ID") });
+
+            return done(null, user);
+        } catch (error) {
+            console.log(error)
+            return done(error, false);
+        }
+    })
+    );
+
     passport.serializeUser(function (user, done) {
         try {
             done(null, user.id);
@@ -43,9 +55,12 @@ const initializationPassport = (passport) => {
 
     passport.deserializeUser(async function (id, done) {
         try {
-            const user = await User.findOne({
-                where: { id: Number(id), is_deleted: false },
-            });
+            const arguments = {
+                modelName: 'User',
+                methodType: 'findOne',
+                args: { where: { id: Number(id), is_deleted: false } }
+            }
+            const user = await getModelInfo(arguments);
             done(null, user);
         } catch (error) {
             console.error("Error during deserialization:", error);

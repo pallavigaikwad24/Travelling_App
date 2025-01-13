@@ -13,7 +13,6 @@ function loginValidation() {
             let arguments = null;
             if (parseInt(value)) arguments = getUserInfo(value, "phone_number");
             else arguments = getUserInfo(value, "email");
-
             const user = await getModelInfo(arguments);
             if (!user) {
                 if (parseInt(value)) throw new Error(notExistErrorMessage("Phone Number", "Register"))

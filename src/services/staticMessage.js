@@ -14,10 +14,20 @@ const logErrorMessage = (value) => `Error during ${value}!`;
 const isEmailVerificationErrorMessage = () => `Your email address is not verified. Please verify your email to proceed with opening your account.`
 const isUserType = () => 'Please select valid User Type!';
 const loginFailedErrMsg = (lockTime) => `Your account has been temporarily locked due to multiple unsuccessful login attempts. 
-Please try again after ${lockTime} minutes, or reset your password if you've forgotten it.`
+Please try again after ${lockTime} minutes, or reset your password if you've forgotten it.`;
+const otpExpireErrorMessage = () => `The OTP has expired. Please request a new one to continue.`;
+const otpIncorrectErrorMessage = () => `The OTP you entered is incorrect. Please try again!`;
+const imageTypeErrorMessage = () => "Only JPEG, PNG, and GIF images are allowed!";
+const requiredImageErrorMessage = () => "Please upload an image!";
+const fileSizeErrorMessage = (size) => `You can't able to upload more than ${size} size images!`
+const fileCountErrorMessage = (count) => `You can only upload upto ${count} images!`;
+const notPermisionErrorMessage = () => `You do not have permission to manipulate this data!`
+const updateSuccessMessage = () => `Information Updated Successfully!`;
 
 module.exports = {
     requiredErrorMessage, validErrorMessage, existErrorMessage, passwordErrorMessage, confirmMatchErrorMessage,
     notExistErrorMessage, notAvailableErrorMessage, availableErrorMessage, expireTokenErrorMessage, emailverficationMessage,
-    logErrorMessage, isEmailVerificationErrorMessage, isUserType, loginFailedErrMsg
+    logErrorMessage, isEmailVerificationErrorMessage, isUserType, loginFailedErrMsg, otpExpireErrorMessage, otpIncorrectErrorMessage,
+    imageTypeErrorMessage, requiredImageErrorMessage, fileSizeErrorMessage, fileCountErrorMessage, notPermisionErrorMessage,
+    updateSuccessMessage
 };

@@ -19,6 +19,9 @@ module.exports = {
       location: {
         type: Sequelize.TEXT
       },
+      images: {
+        type: Sequelize.JSON
+      },
       country: {
         type: Sequelize.TEXT
       },

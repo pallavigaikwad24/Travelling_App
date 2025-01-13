@@ -1,7 +1,6 @@
 const logger = require("../../config/logger");
 const HTTP_CODE = require("../../services/enum");
 const getModelInfo = require("../../services/getModelInfo");
-const { HotelBookingModel, HotelModel } = require("../../models");
 const { where } = require("sequelize");
 const { logErrorMessage } = require("../../services/staticMessage");
 
@@ -9,13 +8,13 @@ const deleteHotelBookingController = async (req, res) => {
     try {
 
         const isOwnerArgument = {
-            modelName: HotelModel, methodType: 'findOne',
+            modelName: 'HotelModel', methodType: 'findOne',
             args: { where: { owner_id: req.user.id, is_deleted: false } }
         }
         const isOwner = await getModelInfo(isOwnerArgument);
         if (isOwner) {
             const argument = {
-                modelName: HotelBookingModel,
+                modelName: 'HotelBookingModel',
                 methodType: 'update',
                 args: [{ is_deleted: true }, { where: { user_id: req.user.id, is_deleted: false } }]
             }

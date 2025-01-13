@@ -1,4 +1,3 @@
-const { FirebaseNotificationToken } = require("../../models");
 const HTTP_CODE = require("../../services/enum");
 const getModelInfo = require("../../services/getModelInfo");
 
@@ -9,7 +8,7 @@ const saveToken = async (req, res) => {
             return res.status(HTTP_CODE.NOT_FOUND.code).send(HTTP_CODE.NOT_FOUND.message);
 
         const arguments = {
-            modelName: FirebaseNotificationToken, methodType: "findOne",
+            modelName: 'FirebaseNotificationToken', methodType: "findOne",
             args: { where: { user_id: req.user.id, is_deleted: false } }
         };
         let existingToken = await getModelInfo(arguments);
@@ -19,7 +18,7 @@ const saveToken = async (req, res) => {
             await existingToken.save();
         } else {
             const argument = {
-                modelName: FirebaseNotificationToken,
+                modelName: 'FirebaseNotificationToken',
                 methodType: 'create',
                 args: { user_id: req.user.id, token: token }
             }
@@ -36,7 +35,7 @@ const saveToken = async (req, res) => {
 const getTokenController = async (req, res) => {
     try {
         const arguments = {
-            modelName: FirebaseNotificationToken, methodType: "findOne",
+            modelName: 'FirebaseNotificationToken', methodType: "findOne",
             args: { where: { user_id: req.user.id, is_deleted: false } }
         };
         const currToken = await getModelInfo(arguments);

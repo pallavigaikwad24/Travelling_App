@@ -1,5 +1,4 @@
 const HTTP_CODE = require("../../services/enum");
-const { FlightModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
 const { Op } = require("sequelize");
@@ -9,7 +8,7 @@ const flightSearchController = async (req, res) => {
     try {
         const { departure_airport, destination_airport, start_date } = req.body;
         const argument = {
-            modelName: FlightModel,
+            modelName: 'FlightModel',
             methodType: 'findAll',
             args: {
                 where: { [Op.and]: [{ departure_airport }, { arrival_airport: destination_airport }] },

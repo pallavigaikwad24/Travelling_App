@@ -1,5 +1,5 @@
 const { body } = require("express-validator");
-const { requiredErrorMessage, validErrorMessage, notAvailableErrorMessage } = require("../services/staticMessage");
+const { requiredErrorMessage, validErrorMessage, notAvailableErrorMessage, imageTypeErrorMessage, requiredImageErrorMessage, fileSizeErrorMessage, fileCountErrorMessage } = require("../services/staticMessage");
 const getModelInfo = require("../services/getModelInfo");
 const { HotelModel } = require("../models");
 const { default: axios } = require("axios");
@@ -54,6 +54,28 @@ function hotelValidation() {
                 }
                 return true;
             }),
+        body("hotel_img").custom(async (value, { req }) => {
+            if (req.files.length == 0 && !value) {
+                throw new Error(requiredImageErrorMessage());
+            }
+
+            // File validation
+            const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+            req.files.forEach((file) => {
+                if (!allowedTypes.includes(file.mimetype)) {
+                    throw new Error(imageTypeErrorMessage());
+                }
+
+                if (file.size > 1024 * 1024 * 5) {
+                    // 5MB limit
+                    throw new Error(fileSizeErrorMessage('5MB'));
+                }
+            });
+            if (req.files.length > 5) {
+                throw new Error(fileCountErrorMessage(5));
+            }
+            return true;
+        }),
     ];
 }
 

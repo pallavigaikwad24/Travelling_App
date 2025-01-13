@@ -10,7 +10,7 @@ const cancellingHotelBookingController = require("../controller/HotelController/
 const updateHotelController = require("../controller/HotelController/updateHotelController");
 const deleteHotelBookingController = require("../controller/HotelController/deleteHotelBookingController");
 const hotelRecordsController = require("../controller/HotelController/HotelRecordsController");
-const hotelSearchMiddleware = require("../middleware/hotelSearchMiddleware");
+const uploads = require("../utils/hotelImagesUpload");
 const route = Router();
 
 route.post("/gethotels", hotelRecordsController);
@@ -189,7 +189,7 @@ route.post("/hotel-booking", isAuth, hotelBookingMiddleware(), validationResultF
  *         description: Internal server error or unexpected error while adding the hotel.
  */
 
-route.post("/add-hotel", isAuth, isAdmin, hotelValidation(), validationResultFun, hotelController);
+route.post("/add-hotel", isAuth, isAdmin, uploads.array("hotel_img"), hotelValidation(), validationResultFun, hotelController);
 
 /**
  * @swagger

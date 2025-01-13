@@ -1,5 +1,4 @@
 const HTTP_CODE = require("../../services/enum");
-const { FlightBookingModel, FlightModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
 const { flightEmailHtml } = require("../../utils/emailNotificationHtmlTemplate");
@@ -10,7 +9,7 @@ const flightBookingController = async (req, res) => {
     try {
         const { flight_id, number_of_seats, total_price } = req.body;
         const arguments = {
-            modelName: FlightBookingModel,
+            modelName: 'FlightBookingModel',
             methodType: "create",
             args: { user_id: req.user.id, flight_id, number_of_seats, total_price }
         }
@@ -18,7 +17,7 @@ const flightBookingController = async (req, res) => {
         const newFlightBooking = await getModelInfo(arguments);
 
         const getFlightInfoArgs = {
-            modelName: FlightModel,
+            modelName: 'FlightModel',
             methodType: 'findOne',
             args: { where: newFlightBooking.flight_id, is_deleted: false }
         }

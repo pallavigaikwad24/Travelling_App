@@ -1,7 +1,6 @@
 const logger = require("../../config/logger");
 const HTTP_CODE = require("../../services/enum");
 const getModelInfo = require("../../services/getModelInfo");
-const { FlightBookingModel, FlightModel } = require("../../models");
 const { where } = require("sequelize");
 const { logErrorMessage } = require("../../services/staticMessage");
 
@@ -9,7 +8,7 @@ const deleteFlightBookingController = async (req, res) => {
     try {
 
         const isOwnerArgument = {
-            modelName: FlightModel,
+            modelName: 'FlightModel',
             methodType: 'findOne',
             args: { where: { owner_id: req.user.id, is_deleted: false } }
         }
@@ -18,7 +17,7 @@ const deleteFlightBookingController = async (req, res) => {
 
         if (isOwner) {
             const argument = {
-                modelName: FlightBookingModel,
+                modelName: 'FlightBookingModel',
                 methodType: 'update',
                 args: [
                     { is_deleted: true },

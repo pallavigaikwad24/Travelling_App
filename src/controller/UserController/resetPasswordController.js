@@ -1,6 +1,5 @@
 const HTTP_CODE = require("../../services/enum");
 const { where } = require("sequelize");
-const { User, PasswordResetToken } = require("../../models");
 const { sendMail } = require("../../email/emailSend");
 const { v4: uuidv4 } = require("uuid");
 const getModelInfo = require("../../services/getModelInfo");
@@ -111,12 +110,12 @@ const emailController = async (req, res) => {
         const { email } = req.body;
         req.session.email = email;
 
-        const arguments = { modelName: User, methodType: "findOne", args: { where: { email, is_deleted: false } } };
+        const arguments = { modelName: 'User', methodType: "findOne", args: { where: { email, is_deleted: false } } };
         const user = await getModelInfo(arguments);
         const token = uuidv4();
 
         const createArgument = {
-            modelName: PasswordResetToken,
+            modelName: 'PasswordResetToken',
             methodType: "create",
             args: { user_id: user.dataValues.id, token, expireToken: Date.now() + 3600000 },
         };

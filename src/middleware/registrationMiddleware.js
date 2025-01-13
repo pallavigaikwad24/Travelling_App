@@ -2,7 +2,6 @@ const { body } = require("express-validator");
 const { requiredErrorMessage, validErrorMessage, existErrorMessage, passwordErrorMessage, confirmMatchErrorMessage, isUserType }
     = require("../services/staticMessage");
 const getModelInfo = require("../services/getModelInfo");
-const { User } = require("../models");
 const { where } = require("sequelize");
 const { default: axios } = require("axios");
 require("dotenv").config();
@@ -19,7 +18,7 @@ function registrationValidation() {
         body("email").custom(async (value, { req }) => {
             console.log("req.body:", req.body);
             if (value?.trim()?.length == 0) throw new Error(requiredErrorMessage("Email ID"));
-            const argument = { modelName: User, methodType: "findOne", args: { where: { email: value, is_deleted: false } } };
+            const argument = { modelName: 'User', methodType: "findOne", args: { where: { email: value, is_deleted: false } } };
             const existEmail = await getModelInfo(argument);
             if (existEmail) throw new Error(existErrorMessage("Email", "Login"));
         }),

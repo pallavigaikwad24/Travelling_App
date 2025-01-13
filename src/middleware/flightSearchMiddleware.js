@@ -1,9 +1,9 @@
 const { body } = require("express-validator");
 const { requiredErrorMessage, notAvailableErrorMessage, validErrorMessage, availableErrorMessage } = require("../services/staticMessage");
-const { FlightModel, FlightBookingModel } = require("../models");
 const { where, Op } = require("sequelize");
 const getModelInfo = require("../services/getModelInfo");
 const { default: axios } = require("axios");
+const { FlightBookingModel } = require("../models");
 require("dotenv").config();
 
 const flightSearchMiddleware = () => {
@@ -19,7 +19,7 @@ const flightSearchMiddleware = () => {
             if (!result) throw new Error(validErrorMessage("Departure Airport Name"));
 
             const argument = {
-                modelName: FlightModel,
+                modelName: 'FlightModel',
                 methodType: "findAll",
                 args: { where: { departure_airport: value, is_deleted: false } }
             }
@@ -39,7 +39,7 @@ const flightSearchMiddleware = () => {
         body("start_date").notEmpty().withMessage(requiredErrorMessage("Start Date")),
         body("start_date").custom(async (value, { req }) => {
             const argument = {
-                modelName: FlightModel,
+                modelName: 'FlightModel',
                 methodType: 'findOne',
                 args: {
                     where: {
@@ -53,7 +53,7 @@ const flightSearchMiddleware = () => {
             }
             const info = await getModelInfo(argument);
             const getAvailableSeats = {
-                modelName: FlightModel, methodType: 'findOne',
+                modelName: 'FlightModel', methodType: 'findOne',
                 args: { attributes: ['seats_available'], where: { id: info.id, is_deleted: false } }
             }
             const availableSeatCount = await getModelInfo(getAvailableSeats);

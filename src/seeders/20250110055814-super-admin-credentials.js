@@ -21,7 +21,7 @@ module.exports = {
         first_name: 'Pallavi',
         last_name: 'Gaikwad',
         email: 'gaikwadpallavi263@gmail.com',
-        password: bcrypt.hashSync("Palalvi@123", 10),
+        password: bcrypt.hashSync("Pallavi@123", 10),
         country: 'India',
         user_type: 'superAdmin',
         phone_number: 8790654321,
@@ -39,5 +39,8 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+
+    await queryInterface.bulkDelete('Users', { email: 'gaikwadpallavi263@gmail.com' }, {})
+
   }
 };

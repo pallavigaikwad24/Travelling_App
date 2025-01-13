@@ -30,7 +30,9 @@ module.exports = (sequelize, DataTypes) => {
 
       User.hasOne(models.LoginAuthModel, {
         foreignKey: 'user_id'
-      })
+      });
+
+      User.hasOne(models.OtpLogin, { foreignKey: 'user_id' })
     }
   }
   User.init({

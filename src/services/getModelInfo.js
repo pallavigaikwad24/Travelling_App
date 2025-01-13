@@ -5,15 +5,18 @@
  * @returns {Promise<Object>}
  */
 
+const { sequelize } = require("../models");
+
 const getModelInfo = async ({ modelName, methodType, args }) => {
-  let data = null;
+  const getModel = sequelize.models[modelName];
+
   if (Array.isArray(args)) {
-    data = await modelName[methodType](...args);
+    return await getModel[methodType](...args);
+  } else if (!args) {
+    return await getModel[methodType]();
   } else {
-    data = await modelName[methodType](args);
+    return await getModel[methodType](args);
   }
-  return data;
 };
 
 module.exports = getModelInfo;
- 

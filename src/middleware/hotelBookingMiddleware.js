@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 const { requiredErrorMessage, validErrorMessage, availableErrorMessage, notAvailableErrorMessage } = require("../services/staticMessage");
-const { HotelModel, HotelBookingModel } = require("../models");
+const { HotelBookingModel } = require("../models");
 const getModelInfo = require("../services/getModelInfo");
 const { where, Op } = require("sequelize");
 
@@ -15,7 +15,7 @@ function hotelBookingMiddleware() {
             .withMessage(validErrorMessage("Hotel ID")),
         body("hotel_id").custom(async (value) => {
             const argument = {
-                modelName: HotelModel,
+                modelName: 'HotelModel',
                 methodType: "findOne",
                 args: { where: { id: value, is_deleted: false } }
             }
@@ -34,7 +34,7 @@ function hotelBookingMiddleware() {
                 }
 
                 const argument = {
-                    modelName: HotelModel,
+                    modelName: 'HotelModel',
                     methodType: 'findOne',
                     args: {
                         where: { id: req.body.hotel_id, is_deleted: false },
@@ -50,7 +50,7 @@ function hotelBookingMiddleware() {
                 hotelName = info.name;
 
                 const getAvailableRooms = {
-                    modelName: HotelModel, methodType: 'findOne',
+                    modelName: 'HotelModel', methodType: 'findOne',
                     args: { attributes: ['available_rooms'], where: { id: info?.id, is_deleted: false } }
                 }
                 const availbleRoomCount = await getModelInfo(getAvailableRooms);

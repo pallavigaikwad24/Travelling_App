@@ -1,5 +1,4 @@
 const { where, Op } = require("sequelize");
-const { HotelModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
 const { logErrorMessage } = require("../../services/staticMessage");
@@ -15,7 +14,7 @@ const hotelRecordsController = async (req, res) => {
         const limit = (count * 10) + 10;
 
         const argument = {
-            modelName: HotelModel,
+            modelName: 'HotelModel',
             methodType: 'findAll',
             args: { where: { [Op.or]: [{ name }, { country: name }], is_deleted: false }, offset, limit }
         }

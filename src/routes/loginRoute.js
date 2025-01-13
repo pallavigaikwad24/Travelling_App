@@ -4,12 +4,15 @@ const loginValidation = require("../middleware/loginMiddleware");
 const validationResultFun = require("../middleware/validationFun");
 const registrationValidation = require("../middleware/registrationMiddleware");
 const registrationController = require("../controller/UserController/registrationController");
-const { loginPassportMiddleware } = require("../middleware/loginPassportMiddleware");
+const { loginPassportMiddleware, otpPassportMiddleware } = require("../middleware/loginPassportMiddleware");
 const emailAuthMiddleware = require("../middleware/emailAuthMiddleware");
 const emailAuthController = require("../controller/UserController/resetPasswordController");
 const forgetPasswordController = require("../controller/UserController/forgetPasswordController");
 const forgetPasswordMiddlware = require("../middleware/forgetPasswordMiddleware");
 const emailVerificationController = require("../controller/UserController/emailVerificationController");
+const { emailValidation, emailParamValidation } = require("../middleware/otpLoginMiddleware");
+const sendOtpController = require("../controller/UserController/sendOtpController");
+const logoutController = require("../controller/UserController/logoutController");
 const route = Router();
 
 /**
@@ -41,6 +44,10 @@ const route = Router();
  */
 
 route.post("/login", loginValidation(), validationResultFun, loginPassportMiddleware, loginController);
+
+route.post("/send-otp", emailValidation(), validationResultFun, sendOtpController)
+
+route.post("/otp-login/:email", emailParamValidation(), validationResultFun, otpPassportMiddleware, loginController);
 
 /**
  * @swagger
@@ -193,5 +200,7 @@ route.post("/forgetpassword/:token", forgetPasswordMiddlware(), validationResult
  */
 
 route.post("/email-verification/:token", emailVerificationController);
+
+route.get("/logout", logoutController);
 
 module.exports = route;

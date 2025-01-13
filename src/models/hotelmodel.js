@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    images: {
+      type: DataTypes.JSON,
+      defaultValue: '[/defaultImg/image.png]'
+    },
     country: {
       type: DataTypes.TEXT,
       allowNull: false,

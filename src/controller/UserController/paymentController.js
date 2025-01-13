@@ -2,7 +2,6 @@ const logger = require("../../config/logger");
 const HTTP_CODE = require("../../services/enum");
 const paymentIntegration = require("../../services/paymentIntegration");
 const { logErrorMessage } = require("../../services/staticMessage");
-const { User } = require("../../models");
 const { where } = require("sequelize");
 const getModelInfo = require("../../services/getModelInfo");
 require("dotenv").config();
@@ -10,7 +9,7 @@ require("dotenv").config();
 const paymentController = async (req, res) => {
     try {
         const argument = {
-            modelName: User,
+            modelName: 'User',
             methodType: 'findOne',
             args: { where: { id: req.user.id }, arguments: ['first_name', 'last_name', 'email', 'phone_number'] }
         };

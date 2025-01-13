@@ -1,5 +1,4 @@
 const HTTP_CODE = require("../../services/enum");
-const { HotelBookingModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const { where } = require("sequelize");
 const logger = require("../../config/logger");
@@ -8,7 +7,7 @@ const { logErrorMessage } = require("../../services/staticMessage");
 const cancellingHotelBookingController = async (req, res) => {
     try {
         const argument = {
-            modelName: HotelBookingModel,
+            modelName: 'HotelBookingModel',
             methodType: 'update',
             args: [
                 { booking_status: false },
@@ -18,7 +17,7 @@ const cancellingHotelBookingController = async (req, res) => {
         await getModelInfo(argument);
 
         const notifyArgument = {
-            modelName: FirebaseNotificationToken,
+            modelName: 'FirebaseNotificationToken',
             methodType: "findOne",
             args: { where: { user_id: req.user.id, is_deleted: false } },
         };

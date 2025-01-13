@@ -1,6 +1,5 @@
 const { where } = require("sequelize");
 const HTTP_CODE = require("../../services/enum");
-const { FlightModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const { logErrorMessage } = require("../../services/staticMessage");
 
@@ -10,7 +9,7 @@ const updateFlightController = async (req, res) => {
             arrival_time, price, seats_available } = req.body;
 
         const argument = {
-            modelName: FlightModel,
+            modelName: 'FlightModel',
             methodType: 'update',
             args: [{
                 flight_number, airline, departure_airport, arrival_airport, departure_date, departure_time, arrival_date,

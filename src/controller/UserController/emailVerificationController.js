@@ -1,6 +1,5 @@
 const { where } = require("sequelize");
 const HTTP_CODE = require("../../services/enum");
-const { User, EmailVerificationToken } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
 const { logErrorMessage } = require("../../services/staticMessage");
@@ -10,7 +9,7 @@ const emailVerificationController = async (req, res) => {
         const { token } = req.query;
 
         const tokenargs = {
-            modelName: EmailVerificationToken,
+            modelName: 'EmailVerificationToken',
             methodType: 'findOne',
             args: { attributes: ['user_id'], where: { token, is_deleted: false } }
         };
@@ -18,7 +17,7 @@ const emailVerificationController = async (req, res) => {
         const tokenInfo = await getModelInfo(tokenargs);
 
         const arguments = {
-            modelName: User,
+            modelName: 'User',
             methodType: 'update',
             args: [
                 { is_verified: true },

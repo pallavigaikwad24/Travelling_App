@@ -1,5 +1,4 @@
 const HTTP_CODE = require("../../services/enum");
-const { FlightBookingModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const { where } = require("sequelize");
 const logger = require("../../config/logger");
@@ -8,7 +7,7 @@ const { logErrorMessage } = require("../../services/staticMessage");
 const cancellingFlightBookingController = async (req, res) => {
     try {
         const argument = {
-            modelName: FlightBookingModel,
+            modelName: 'FlightBookingModel',
             methodType: 'update',
             args: [{ booking_status: false }, { where: { user_id: req.user.id, is_deleted: false } }]
         }

@@ -1,5 +1,4 @@
 const HTTP_CODE = require("../../services/enum");
-const { FlightModel } = require("../../models");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
 const { logErrorMessage } = require("../../services/staticMessage");
@@ -9,7 +8,7 @@ const flightController = async (req, res) => {
         const { flight_number, airline, departure_airport, arrival_airport, departure_date, departure_time, arrival_date,
             arrival_time, price, seats_available } = req.body;
         const arguments = {
-            modelName: FlightModel,
+            modelName: 'FlightModel',
             methodType: "create",
             args: {
                 owner_id: req.user.id, flight_number, airline, departure_airport, arrival_airport, departure_date,
