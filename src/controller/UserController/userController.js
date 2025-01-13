@@ -51,4 +51,31 @@ const userUpdateController = async (req, res) => {
     }
 }
 
-module.exports = { userController, userUpdateController };
+const userDeleteController = async (req, res) => {
+    try {
+
+        const { email } = req.body;
+        const argument = {
+            modelName: 'User',
+            methodType: 'update',
+            args: [
+                { is_deleted: true },
+                { where: { email } }
+            ]
+        };
+
+        await getModelInfo(argument);
+        return res.status(HTTP_CODE.OK.code).send(HTTP_CODE.OK.message);
+    } catch (error) {
+        logger.error(logErrorMessage("Deleting User Info"), {
+            method: req.method,
+            url: `${req.get("Host")}${req.originalUrl}`,
+            message: error.message,
+            stack: error.stack,
+        });
+        console.log(error);
+        return res.status(HTTP_CODE.BAD_REQUEST.code).send({ message: error.message });
+    }
+}
+
+module.exports = { userController, userUpdateController, userDeleteController };

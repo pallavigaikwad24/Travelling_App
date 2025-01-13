@@ -11,6 +11,8 @@ const updateHotelController = require("../controller/HotelController/updateHotel
 const deleteHotelBookingController = require("../controller/HotelController/deleteHotelBookingController");
 const hotelRecordsController = require("../controller/HotelController/HotelRecordsController");
 const uploads = require("../utils/hotelImagesUpload");
+const hotelReviewMiddleware = require("../middleware/hotelReviewMiddleware");
+const hotelReviewController = require("../controller/HotelController/hotelReviewsController");
 const route = Router();
 
 route.post("/gethotels", hotelRecordsController);
@@ -313,5 +315,7 @@ route.delete("/deleting-hotel-booking", isAuth, isAdmin, deleteHotelBookingContr
  */
 
 route.put("/update-hotel-info", isAuth, isAdmin, hotelValidation(), validationResultFun, updateHotelController);
+
+route.post("/add-hotel-reviews", isAuth, hotelReviewMiddleware(), validationResultFun, hotelReviewController);
 
 module.exports = route;

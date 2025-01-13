@@ -23,11 +23,12 @@ const fileSizeErrorMessage = (size) => `You can't able to upload more than ${siz
 const fileCountErrorMessage = (count) => `You can only upload upto ${count} images!`;
 const notPermisionErrorMessage = () => `You do not have permission to manipulate this data!`
 const updateSuccessMessage = () => `Information Updated Successfully!`;
+const ratingErrorMessage = () => `Rating shoulbe be between 1 to 5!`;
 
 module.exports = {
     requiredErrorMessage, validErrorMessage, existErrorMessage, passwordErrorMessage, confirmMatchErrorMessage,
     notExistErrorMessage, notAvailableErrorMessage, availableErrorMessage, expireTokenErrorMessage, emailverficationMessage,
     logErrorMessage, isEmailVerificationErrorMessage, isUserType, loginFailedErrMsg, otpExpireErrorMessage, otpIncorrectErrorMessage,
     imageTypeErrorMessage, requiredImageErrorMessage, fileSizeErrorMessage, fileCountErrorMessage, notPermisionErrorMessage,
-    updateSuccessMessage
+    updateSuccessMessage, ratingErrorMessage
 };
