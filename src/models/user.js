@@ -32,7 +32,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id'
       });
 
-      User.hasOne(models.OtpLogin, { foreignKey: 'user_id' })
+      User.hasOne(models.OtpLogin, { foreignKey: 'user_id' });
+
+      User.hasMany(models.ReviewHotelModel, { foreignKey: 'user_id' })
     }
   }
   User.init({

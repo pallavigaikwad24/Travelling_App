@@ -37,11 +37,11 @@ const loginController = async (req, res) => {
             }
 
             userInfo = await getModelInfo(argument);
-            if (!userInfo.is_verified) return res.status(HTTP_CODE.FORBIDDEN.code).send(isEmailVerificationErrorMessage());
+            if (!userInfo.is_verified) return res.status(HTTP_CODE.FORBIDDEN.code).send({ msg: isEmailVerificationErrorMessage() });
         }
         if (req.params.email) {
             userInfo = await getModelInfo(getArgument(req.params.email, "email"));
-            if (!userInfo.is_verified) return res.status(HTTP_CODE.FORBIDDEN.code).send(isEmailVerificationErrorMessage());
+            if (!userInfo.is_verified) return res.status(HTTP_CODE.FORBIDDEN.code).send({ msg: isEmailVerificationErrorMessage() });
         }
 
         return res.status(HTTP_CODE.ACCEPTED.code).send(userInfo);

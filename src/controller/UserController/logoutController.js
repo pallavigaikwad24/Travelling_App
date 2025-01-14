@@ -1,6 +1,6 @@
 const logger = require("../../config/logger");
 const HTTP_CODE = require("../../services/enum");
-const { logErrorMessage } = require("../../services/staticMessage");
+const { logErrorMessage, logoutSucess } = require("../../services/staticMessage");
 
 const logoutController = async (req, res) => {
     try {
@@ -22,7 +22,7 @@ const logoutController = async (req, res) => {
                     return res.status(HTTP_CODE.BAD_REQUEST.code).send(HTTP_CODE.BAD_REQUEST.message);
                 }
                 res.clearCookie("user_session");
-                return res.status(HTTP_CODE.OK.code).send(HTTP_CODE.OK.message);
+                return res.status(HTTP_CODE.OK.code).send({ msg: logoutSucess() });
             });
         });
     } catch (error) {

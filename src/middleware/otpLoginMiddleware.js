@@ -15,6 +15,7 @@ function emailValidation() {
             if (!user) {
                 throw new Error(notExistErrorMessage("Email ID", "Register"))
             }
+            return true;
         }),
     ];
     return result;

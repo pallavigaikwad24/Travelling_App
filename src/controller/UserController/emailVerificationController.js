@@ -2,7 +2,7 @@ const { where } = require("sequelize");
 const HTTP_CODE = require("../../services/enum");
 const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
-const { logErrorMessage } = require("../../services/staticMessage");
+const { logErrorMessage, successEmailVerification } = require("../../services/staticMessage");
 
 const emailVerificationController = async (req, res) => {
     try {
@@ -26,7 +26,7 @@ const emailVerificationController = async (req, res) => {
         }
 
         await getModelInfo(arguments);
-        return res.status(HTTP_CODE.ACCEPTED.code).send(HTTP_CODE.ACCEPTED.message);
+        return res.status(HTTP_CODE.ACCEPTED.code).send({msg: successEmailVerification()});
     } catch (error) {
         logger.error(logErrorMessage("Password"), {
             method: req.method,

@@ -11,6 +11,9 @@ yarn-debug.log*
 yarn-error.log*
 
 src/config/*.json
+
+public/hotelPictures/upload
+public/hotelPictures/temp
  
 # Dependency directories
 jspm_packages/

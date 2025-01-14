@@ -25,10 +25,17 @@ const notPermisionErrorMessage = () => `You do not have permission to manipulate
 const updateSuccessMessage = () => `Information Updated Successfully!`;
 const ratingErrorMessage = () => `Rating shoulbe be between 1 to 5!`;
 
+const otpSendSuccess = (email) => `An OTP has been sent successfully to your registered email address: ${email}.`;
+const forgetPasswordSuccess = () => `Your password reset was successful. You can now log in using your new password.`;
+const successEmailVerification = () => `Your email has been successfully verified. Thank you for confirming your email address!`;
+const logoutSucess = () => `You have been successfully logged out. We hope to see you again soon!`;
+const deleteSuccess = (value) => `The ${value} has been successfully deleted.`;
+
 module.exports = {
     requiredErrorMessage, validErrorMessage, existErrorMessage, passwordErrorMessage, confirmMatchErrorMessage,
     notExistErrorMessage, notAvailableErrorMessage, availableErrorMessage, expireTokenErrorMessage, emailverficationMessage,
     logErrorMessage, isEmailVerificationErrorMessage, isUserType, loginFailedErrMsg, otpExpireErrorMessage, otpIncorrectErrorMessage,
     imageTypeErrorMessage, requiredImageErrorMessage, fileSizeErrorMessage, fileCountErrorMessage, notPermisionErrorMessage,
-    updateSuccessMessage, ratingErrorMessage
+    updateSuccessMessage, ratingErrorMessage, otpSendSuccess, forgetPasswordSuccess, successEmailVerification, logoutSucess,
+    deleteSuccess
 };

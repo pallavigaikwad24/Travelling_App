@@ -2,7 +2,7 @@ const { where, Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const getModelInfo = require("../../services/getModelInfo");
 const HTTP_CODE = require("../../services/enum");
-const { expireTokenErrorMessage, logErrorMessage } = require("../../services/staticMessage");
+const { expireTokenErrorMessage, logErrorMessage, forgetPasswordSuccess } = require("../../services/staticMessage");
 const logger = require("../../config/logger");
 
 const forgetPasswordController = async (req, res) => {
@@ -18,7 +18,7 @@ const forgetPasswordController = async (req, res) => {
 
         const currToken = await getModelInfo(findOneArguments);
         if (!currToken) {
-            return res.status(HTTP_CODE.NOT_FOUND.code).send(expireTokenErrorMessage());
+            return res.status(HTTP_CODE.NOT_FOUND.code).send({ msg: expireTokenErrorMessage() });
 
         } else {
             const updateArguments = {
@@ -28,7 +28,7 @@ const forgetPasswordController = async (req, res) => {
             };
 
             await getModelInfo(updateArguments);
-            return res.status(HTTP_CODE.OK.code).send(HTTP_CODE.OK.message);
+            return res.status(HTTP_CODE.OK.code).send({ msg: forgetPasswordSuccess() });
         }
     } catch (error) {
         logger.error(logErrorMessage("Forget Password"), {

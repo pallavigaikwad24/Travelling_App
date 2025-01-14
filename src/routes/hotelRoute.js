@@ -13,6 +13,10 @@ const hotelRecordsController = require("../controller/HotelController/HotelRecor
 const uploads = require("../utils/hotelImagesUpload");
 const hotelReviewMiddleware = require("../middleware/hotelReviewMiddleware");
 const hotelReviewController = require("../controller/HotelController/hotelReviewsController");
+const { hotelImageMiddleware, deleteHotelImageMiddleware, deleteCustomeImageMiddleware } = require("../middleware/hotelImageMiddleware");
+const hotelImageController = require("../controller/HotelController/hotelImageController");
+const deleteAllHotelImageController = require("../controller/HotelController/deleteAllHotelImageController");
+const deleteCustomeImageController = require("../controller/HotelController/deleteCustomeImageController");
 const route = Router();
 
 route.post("/gethotels", hotelRecordsController);
@@ -193,6 +197,18 @@ route.post("/hotel-booking", isAuth, hotelBookingMiddleware(), validationResultF
 
 route.post("/add-hotel", isAuth, isAdmin, uploads.array("hotel_img"), hotelValidation(), validationResultFun, hotelController);
 
+route.delete("/delete-hotel-image", isAuth, isAdmin, deleteHotelImageMiddleware(), validationResultFun, deleteAllHotelImageController);
+
+// Add More Images (into existing)
+
+route.post("/add-hotel-images", isAuth, isAdmin, uploads.array("hotel_img"),
+    hotelImageMiddleware(), validationResultFun, hotelImageController
+);
+
+// Deleting Single Image from exiting multiple images
+
+route.delete("/delete-custome-image", isAuth, isAdmin, deleteCustomeImageMiddleware(), validationResultFun, deleteCustomeImageController)
+
 /**
  * @swagger
  * /hotel/delete-hotel-info:
@@ -316,6 +332,6 @@ route.delete("/deleting-hotel-booking", isAuth, isAdmin, deleteHotelBookingContr
 
 route.put("/update-hotel-info", isAuth, isAdmin, hotelValidation(), validationResultFun, updateHotelController);
 
-route.post("/add-hotel-reviews", isAuth, hotelReviewMiddleware(), validationResultFun, hotelReviewController);
+route.post("/add-hotel-reviews/:hotel_id", isAuth, hotelReviewMiddleware(), validationResultFun, hotelReviewController);
 
 module.exports = route;

@@ -36,16 +36,11 @@ const hotelController = async (req, res) => {
                 imagePaths.push(file.originalname);
             }
 
-            const argument = {
-                modelName: 'HotelModel',
-                methodType: 'update',
-                args: [{ images: JSON.stringify(imagePaths) }, { where: { owner_id: req.user.id } }]
-            }
-
-            await getModelInfo(argument);
+            newHotelInfo.images = JSON.stringify(imagePaths);
+            await newHotelInfo.save();
         }
 
-        return res.status(HTTP_CODE.OK.code).send(HTTP_CODE.OK.message);
+        return res.status(HTTP_CODE.OK.code).send(newHotelInfo);
     } catch (error) {
         logger.error(logErrorMessage("Adding Hotel Details"), {
             method: req.method,

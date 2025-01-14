@@ -1,7 +1,8 @@
 const { where } = require("sequelize");
 const HTTP_CODE = require("../../services/enum");
 const getModelInfo = require("../../services/getModelInfo");
-const { updateSuccessMessage } = require("../../services/staticMessage");
+const { updateSuccessMessage, logErrorMessage, deleteSuccess } = require("../../services/staticMessage");
+const logger = require("../../config/logger");
 
 const userController = async (req, res) => {
     try {
@@ -65,7 +66,7 @@ const userDeleteController = async (req, res) => {
         };
 
         await getModelInfo(argument);
-        return res.status(HTTP_CODE.OK.code).send(HTTP_CODE.OK.message);
+        return res.status(HTTP_CODE.OK.code).send({ msg: deleteSuccess("User Account") });
     } catch (error) {
         logger.error(logErrorMessage("Deleting User Info"), {
             method: req.method,

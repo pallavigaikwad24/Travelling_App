@@ -33,7 +33,7 @@ const registrationController = async (req, res) => {
         await getModelInfo(tokenArgument);
 
         if (!newUser.is_verified) return res.status(HTTP_CODE.ACCEPTED.code)
-            .send(emailverficationMessage("Email", "Registration"));
+            .send({ msg: emailverficationMessage("Email", "Registration") });
         return res.status(HTTP_CODE.ACCEPTED.code).send(newUser);
     } catch (error) {
         logger.error(logErrorMessage("Registration"), {

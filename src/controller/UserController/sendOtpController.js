@@ -2,7 +2,7 @@ const { where } = require("sequelize");
 const logger = require("../../config/logger");
 const { sendMail } = require("../../email/emailSend");
 const HTTP_CODE = require("../../services/enum");
-const { logErrorMessage } = require("../../services/staticMessage");
+const { logErrorMessage, otpSendSuccess } = require("../../services/staticMessage");
 const otpEmailHtmlTemplate = require("../../utils/otpLoginHtmlTemplate");
 const getModelInfo = require("../../services/getModelInfo");
 
@@ -44,7 +44,7 @@ const sendOtpController = async (req, res) => {
             otpEmailHtmlTemplate(otp)
         );
 
-        return res.status(HTTP_CODE.OK.code).send(HTTP_CODE.OK.message)
+        return res.status(HTTP_CODE.OK.code).send({ msg: otpSendSuccess(req.body.email) });
     } catch (error) {
         logger.error(logErrorMessage("sending Otp"), {
             method: req.method,
