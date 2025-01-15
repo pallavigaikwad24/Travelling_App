@@ -30,10 +30,13 @@ const forgetPasswordSuccess = () => `Your password reset was successful. You can
 const successEmailVerification = () => `Your email has been successfully verified. Thank you for confirming your email address!`;
 const logoutSucess = () => `You have been successfully logged out. We hope to see you again soon!`;
 
+const tokenErrorMessage = (token) => `${token} is not a valid token! `;
+
 module.exports = {
     requiredErrorMessage, validErrorMessage, existErrorMessage, passwordErrorMessage, confirmMatchErrorMessage,
     notExistErrorMessage, notAvailableErrorMessage, availableErrorMessage, expireTokenErrorMessage, emailverficationMessage,
     logErrorMessage, isEmailVerificationErrorMessage, isUserType, loginFailedErrMsg, otpExpireErrorMessage, otpIncorrectErrorMessage,
     imageTypeErrorMessage, requiredImageErrorMessage, fileSizeErrorMessage, fileCountErrorMessage, notPermisionErrorMessage,
-    updateSuccessMessage, ratingErrorMessage, otpSendSuccess, forgetPasswordSuccess, successEmailVerification, logoutSucess
+    updateSuccessMessage, ratingErrorMessage, otpSendSuccess, forgetPasswordSuccess, successEmailVerification, logoutSucess,
+    tokenErrorMessage
 };

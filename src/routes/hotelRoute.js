@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const hotelBookingController = require("../controller/HotelController/hotelBookingController");
 const hotelController = require("../controller/HotelController/hotelController");
-const { isAuth, isAdmin } = require("../middleware/loginPassportMiddleware");
+const { isAuth, isAdmin, isSuperAdmin } = require("../middleware/loginPassportMiddleware");
 const hotelValidation = require("../middleware/hotelMiddleware");
 const validationResultFun = require("../middleware/validationFun");
 const hotelBookingMiddleware = require("../middleware/hotelBookingMiddleware");
@@ -17,6 +17,8 @@ const { hotelImageMiddleware, deleteHotelImageMiddleware, deleteCustomeImageMidd
 const hotelImageController = require("../controller/HotelController/hotelImageController");
 const deleteAllHotelImageController = require("../controller/HotelController/deleteAllHotelImageController");
 const deleteCustomeImageController = require("../controller/HotelController/deleteCustomeImageController");
+const verifyHotelController = require("../controller/HotelController/verifyHotelController");
+const verifyHotelMiddleware = require("../middleware/verifyHotelMiddleware");
 const route = Router();
 
 route.post("/gethotels", hotelRecordsController);
@@ -196,6 +198,10 @@ route.post("/hotel-booking", isAuth, hotelBookingMiddleware(), validationResultF
  */
 
 route.post("/add-hotel", isAuth, isAdmin, uploads.array("hotel_img"), hotelValidation(), validationResultFun, hotelController);
+
+// Verify Hotel Entry
+
+route.patch("/verify-hotel", isAuth, isSuperAdmin, verifyHotelMiddleware(), validationResultFun, verifyHotelController)
 
 route.delete("/delete-hotel-image", isAuth, isAdmin, deleteHotelImageMiddleware(), validationResultFun, deleteAllHotelImageController);
 

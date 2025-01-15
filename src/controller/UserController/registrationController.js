@@ -25,12 +25,18 @@ const registrationController = async (req, res) => {
             args: { first_name, last_name, email, password: bcrypt.hashSync(password, 10), country, phone_number, user_type }
         }
         const newUser = await getModelInfo(argument);
+
         const tokenArgument = {
             modelName: 'EmailVerificationToken',
-            methodType: 'create',
-            args: { user_id: newUser?.id, token: token }
+            methodType: 'findOrCreate',
+            args: { where: { user_id: newUser?.id }, defaults: { token: token } }
         }
-        await getModelInfo(tokenArgument);
+        const [newToken, createToken] = await getModelInfo(tokenArgument);
+
+        if (!createToken) {
+            newToken.token = token
+            await newToken.save();
+        }
 
         if (!newUser.is_verified) return res.status(HTTP_CODE.ACCEPTED.code)
             .send({ msg: emailverficationMessage("Email", "Registration") });

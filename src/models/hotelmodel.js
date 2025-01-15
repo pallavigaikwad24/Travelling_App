@@ -56,6 +56,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
       allowNull: false,
     },
+    is_verified:{
+      type: DataTypes.BOOLEAN
+    },
     is_deleted: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

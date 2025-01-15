@@ -86,7 +86,7 @@ const emailVerificationHtmlTemplate = (host, token) =>
 
         <!-- Body -->
         <div class="email-body">
-            <a href="http://${host}/user/email-verification/query?token=${token}" class="btn">Verify Email</a>
+            <a href="http://${host}/user/email-verification/${token}" class="btn">Verify Email</a>
             <p>
                 If you didn’t sign up for an account, you can safely ignore this email.
             </p>

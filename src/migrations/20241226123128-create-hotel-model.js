@@ -34,6 +34,10 @@ module.exports = {
       services: {
         type: Sequelize.JSON
       },
+      is_verified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       is_deleted: {
         type: Sequelize.BOOLEAN
       },

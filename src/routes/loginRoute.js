@@ -13,6 +13,7 @@ const emailVerificationController = require("../controller/UserController/emailV
 const { emailValidation, emailParamValidation } = require("../middleware/otpLoginMiddleware");
 const sendOtpController = require("../controller/UserController/sendOtpController");
 const logoutController = require("../controller/UserController/logoutController");
+const emailVerficationMiddleware = require("../middleware/emailVerificationMiddleware");
 const route = Router();
 
 /**
@@ -199,7 +200,7 @@ route.post("/forgetpassword/:token", forgetPasswordMiddlware(), validationResult
  *         description: Internal server error during the email verification process.
  */
 
-route.post("/email-verification/:token", emailVerificationController);
+route.post("/email-verification/:token", emailVerficationMiddleware(), validationResultFun, emailVerificationController);
 
 route.get("/logout", logoutController);
 

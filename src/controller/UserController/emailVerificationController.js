@@ -6,7 +6,7 @@ const { logErrorMessage, successEmailVerification } = require("../../services/st
 
 const emailVerificationController = async (req, res) => {
     try {
-        const { token } = req.query;
+        const { token } = req.params;
 
         const tokenargs = {
             modelName: 'EmailVerificationToken',
@@ -26,9 +26,9 @@ const emailVerificationController = async (req, res) => {
         }
 
         await getModelInfo(arguments);
-        return res.status(HTTP_CODE.ACCEPTED.code).send({msg: successEmailVerification()});
+        return res.status(HTTP_CODE.ACCEPTED.code).send({ msg: successEmailVerification() });
     } catch (error) {
-        logger.error(logErrorMessage("Password"), {
+        logger.error(logErrorMessage("email verification"), {
             method: req.method,
             url: `${req.get("Host")}${req.originalUrl}`,
             message: error.message,
