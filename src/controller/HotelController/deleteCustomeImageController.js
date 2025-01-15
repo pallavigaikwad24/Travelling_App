@@ -27,7 +27,7 @@ const deleteCustomeImageController = async (req, res) => {
         if (fs.existsSync(deleteImagePath)) {
             fs.rm(deleteImagePath, { recursive: true });
         }
-        return res.status(HTTP_CODE.OK.code).send(HTTP_CODE.OK.message);
+        return res.status(HTTP_CODE.OK.code).send(hotelInfo);
     } catch (error) {
         logger.error(logErrorMessage("Adding Images Into Exiting Hotel Images"), {
             method: req.method,

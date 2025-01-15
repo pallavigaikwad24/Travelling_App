@@ -11,8 +11,8 @@ const cancellingFlightBookingController = async (req, res) => {
             methodType: 'update',
             args: [{ booking_status: false }, { where: { user_id: req.user.id, is_deleted: false } }]
         }
-        await getModelInfo(argument);
-        return res.status(HTTP_CODE.NO_CONTENT.code).send(HTTP_CODE.NO_CONTENT.message)
+        const result = await getModelInfo(argument);
+        return res.status(HTTP_CODE.ACCEPTED.code).send(result)
 
     } catch (error) {
         logger.error(logErrorMessage("cancelling flight booking"), {

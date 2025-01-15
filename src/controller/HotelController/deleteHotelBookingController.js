@@ -18,8 +18,8 @@ const deleteHotelBookingController = async (req, res) => {
                 methodType: 'update',
                 args: [{ is_deleted: true }, { where: { user_id: req.user.id, is_deleted: false } }]
             }
-            await getModelInfo(argument);
-            return res.status(HTTP_CODE.NO_CONTENT.code).send(HTTP_CODE.NO_CONTENT.message)
+            const result = await getModelInfo(argument);
+            return res.status(HTTP_CODE.ACCEPTED.code).send(result)
         } else {
             return res.status(HTTP_CODE.FORBIDDEN.code).send(HTTP_CODE.FORBIDDEN.message);
         }

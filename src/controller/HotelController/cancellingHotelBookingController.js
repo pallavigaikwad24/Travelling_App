@@ -14,7 +14,7 @@ const cancellingHotelBookingController = async (req, res) => {
                 { where: { user_id: req.user.id, is_deleted: false } }
             ]
         }
-        await getModelInfo(argument);
+        const result = await getModelInfo(argument);
 
         const notifyArgument = {
             modelName: 'FirebaseNotificationToken',
@@ -36,7 +36,7 @@ const cancellingHotelBookingController = async (req, res) => {
             await getAdminCall(message);
         }
 
-        return res.status(HTTP_CODE.NO_CONTENT.code).send(HTTP_CODE.NO_CONTENT.message)
+        return res.status(HTTP_CODE.ACCEPTED.code).send(result);
     } catch (error) {
         logger.error(logErrorMessage("cancelling hotel booking"), {
             method: req.method,

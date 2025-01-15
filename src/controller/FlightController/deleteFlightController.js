@@ -9,8 +9,8 @@ const deleteFlightController = async (req, res) => {
         const argument = {
             modelName: 'FlightModel', methodType: 'update', args: [{ is_deleted: true }, { where: { owner_id: req.user.id } }]
         }
-        await getModelInfo(argument);
-        return res.status(HTTP_CODE.NO_CONTENT.code).send(HTTP_CODE.NO_CONTENT.message)
+        const result = await getModelInfo(argument);
+        return res.status(HTTP_CODE.ACCEPTED.code).send(result);
     } catch (error) {
         logger.error(logErrorMessage("deleting flight records"), {
             method: req.method, url: `${req.get("Host")}${req.originalUrl}`, message: error.message, stack: error.stack,

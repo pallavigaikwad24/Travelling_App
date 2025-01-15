@@ -29,13 +29,11 @@ const otpSendSuccess = (email) => `An OTP has been sent successfully to your reg
 const forgetPasswordSuccess = () => `Your password reset was successful. You can now log in using your new password.`;
 const successEmailVerification = () => `Your email has been successfully verified. Thank you for confirming your email address!`;
 const logoutSucess = () => `You have been successfully logged out. We hope to see you again soon!`;
-const deleteSuccess = (value) => `The ${value} has been successfully deleted.`;
 
 module.exports = {
     requiredErrorMessage, validErrorMessage, existErrorMessage, passwordErrorMessage, confirmMatchErrorMessage,
     notExistErrorMessage, notAvailableErrorMessage, availableErrorMessage, expireTokenErrorMessage, emailverficationMessage,
     logErrorMessage, isEmailVerificationErrorMessage, isUserType, loginFailedErrMsg, otpExpireErrorMessage, otpIncorrectErrorMessage,
     imageTypeErrorMessage, requiredImageErrorMessage, fileSizeErrorMessage, fileCountErrorMessage, notPermisionErrorMessage,
-    updateSuccessMessage, ratingErrorMessage, otpSendSuccess, forgetPasswordSuccess, successEmailVerification, logoutSucess,
-    deleteSuccess
+    updateSuccessMessage, ratingErrorMessage, otpSendSuccess, forgetPasswordSuccess, successEmailVerification, logoutSucess
 };

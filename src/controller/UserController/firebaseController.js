@@ -22,10 +22,10 @@ const saveToken = async (req, res) => {
                 methodType: 'create',
                 args: { user_id: req.user.id, token: token }
             }
-            await getModelInfo(argument);
+            existingToken = await getModelInfo(argument);
         }
 
-        return res.status(HTTP_CODE.OK.code).send(HTTP_CODE.OK.message);
+        return res.status(HTTP_CODE.OK.code).send(existingToken);
     } catch (error) {
         console.error("Error saving token:", error);
         return res.status(HTTP_CODE.BAD_REQUEST.code).send(HTTP_CODE.BAD_REQUEST.message);
@@ -45,7 +45,7 @@ const getTokenController = async (req, res) => {
         }
 
         const token = currToken.token;
-        return res.status(HTTP_CODE.OK.code).json(token);
+        return res.status(HTTP_CODE.OK.code).json({ token });
     } catch (error) {
         console.error("Error getting token:", error);
         res.status(HTTP_CODE.BAD_REQUEST.code).send(HTTP_CODE.BAD_REQUEST.message);

@@ -1,7 +1,7 @@
 const { where } = require("sequelize");
 const logger = require("../../config/logger");
 const HTTP_CODE = require("../../services/enum");
-const { logErrorMessage, deleteSuccess } = require("../../services/staticMessage");
+const { logErrorMessage } = require("../../services/staticMessage");
 const getModelInfo = require("../../services/getModelInfo");
 const fs = require("fs");
 const path = require("path");
@@ -22,8 +22,8 @@ const deleteAllHotelImageController = async (req, res) => {
                 { where: { id: req.body.hotel_id, owner_id: req.user.id } }
             ]
         }
-        await getModelInfo(arguments);
-        return res.status(HTTP_CODE.OK.code).send({ msg: deleteSuccess("Hotel Record") });
+        const result = await getModelInfo(arguments);
+        return res.status(HTTP_CODE.OK.code).send(result);
     } catch (error) {
         logger.error(logErrorMessage("Adding Images Into Exiting Hotel Images"), {
             method: req.method,

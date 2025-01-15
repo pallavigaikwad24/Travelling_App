@@ -11,7 +11,8 @@ const getModelInfo = async ({ modelName, methodType, args }) => {
   const getModel = sequelize.models[modelName];
 
   if (Array.isArray(args)) {
-    return await getModel[methodType](...args);
+    await getModel[methodType](...args);
+    return await getModel['findOne'](args[1]);
   } else if (!args) {
     return await getModel[methodType]();
   } else {

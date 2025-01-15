@@ -16,8 +16,8 @@ const updateFlightController = async (req, res) => {
                 arrival_time, price, seats_available
             }, { where: { owner_id: req.user.id, is_deleted: false } }]
         }
-        await getModelInfo(argument);
-        return res.status(HTTP_CODE.ACCEPTED.code).send(HTTP_CODE.ACCEPTED.message);
+        const result = await getModelInfo(argument);
+        return res.status(HTTP_CODE.ACCEPTED.code).send(result);
     } catch (error) {
         logger.error(logErrorMessage("updating flights"), {
             method: req.method,

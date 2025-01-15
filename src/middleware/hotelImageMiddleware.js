@@ -55,9 +55,7 @@ const deleteHotelImageMiddleware = () => {
                 if (!fs.existsSync(src)) throw new Error(notExistErrorMessage("Images you want to delete").split(".")[0]);
 
                 return true;
-
             }),
-
     ]
 }
 

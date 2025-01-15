@@ -7,10 +7,11 @@ const { logErrorMessage } = require("../../services/staticMessage");
 const deleteHotelController = async (req, res) => {
     try {
         const argument = {
-            modelName: 'HotelModel', methodType: 'update', args: [{ is_deleted: true }, { where: { owner_id: req.user.id } }]
+            modelName: 'HotelModel', methodType: 'update',
+            args: [{ is_deleted: true }, { where: { owner_id: req.user.id, id: req.body.hotel_id } }]
         }
-        await getModelInfo(argument);
-        return res.status(HTTP_CODE.NO_CONTENT.code).send(HTTP_CODE.NO_CONTENT.message)
+        const result = await getModelInfo(argument);
+        return res.status(HTTP_CODE.ACCEPTED.code).send(result);
     } catch (error) {
         logger.error(logErrorMessage("deleting hotel records"), {
             method: req.method, url: `${req.get("Host")}${req.originalUrl}`, message: error.message, stack: error.stack,

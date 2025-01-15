@@ -24,8 +24,8 @@ const deleteFlightBookingController = async (req, res) => {
                     { where: { user_id: req.user.id } }
                 ]
             }
-            await getModelInfo(argument);
-            return res.status(HTTP_CODE.NO_CONTENT.code).send(HTTP_CODE.NO_CONTENT.message)
+            const result = await getModelInfo(argument);
+            return res.status(HTTP_CODE.ACCEPTED.code).send(result);
         } else {
             return res.status(HTTP_CODE.FORBIDDEN.code).send(HTTP_CODE.FORBIDDEN.message);
         }

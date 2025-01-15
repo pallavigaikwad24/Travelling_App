@@ -36,9 +36,8 @@ const hotelImageController = async (req, res) => {
             existingImages.images = JSON.stringify(existingImageList);
             await existingImages.save();
         }
-        console.log("Existing Image:", existingImages);
 
-        return res.status(HTTP_CODE.ACCEPTED.code).send(HTTP_CODE.ACCEPTED.message)
+        return res.status(HTTP_CODE.ACCEPTED.code).send(existingImages);
     } catch (error) {
         logger.error(logErrorMessage("Adding Images Into Exiting Hotel Images"), {
             method: req.method,

@@ -15,8 +15,8 @@ const updateHotelController = async (req, res) => {
                 { where: { owner_id: req.user.id, is_deleted: false } }
             ]
         }
-        await getModelInfo(argument);
-        return res.status(HTTP_CODE.ACCEPTED.code).send(HTTP_CODE.ACCEPTED.message);
+        const result = await getModelInfo(argument);
+        return res.status(HTTP_CODE.ACCEPTED.code).send(result);
     } catch (error) {
         logger.error(logErrorMessage("updating Hotel records"), {
             method: req.method,
