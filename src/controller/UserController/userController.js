@@ -38,8 +38,8 @@ const userUpdateController = async (req, res) => {
             ]
         }
 
-        await getModelInfo(argument);
-        return res.status(HTTP_CODE.OK.code).send({ message: updateSuccessMessage() })
+        const updateResult = await getModelInfo(argument);
+        return res.status(HTTP_CODE.OK.code).send(updateResult);
     } catch (error) {
         logger.error(logErrorMessage("Updating User Info"), {
             method: req.method,
