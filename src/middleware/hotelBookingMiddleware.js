@@ -1,5 +1,5 @@
 const { body } = require("express-validator");
-const { requiredErrorMessage, validErrorMessage, availableErrorMessage, notAvailableErrorMessage } = require("../services/staticMessage");
+const { requiredErrorMessage, validErrorMessage, availableErrorMessage, notAvailableErrorMessage, notExistErrorMessage } = require("../services/staticMessage");
 const { HotelBookingModel } = require("../models");
 const getModelInfo = require("../services/getModelInfo");
 const { where, Op } = require("sequelize");
@@ -39,13 +39,16 @@ function hotelBookingMiddleware() {
                     args: {
                         where: { id: req.body.hotel_id, is_deleted: false },
                         include: [
-                            { model: HotelBookingModel, attributes: ['hotel_id', 'number_of_rooms', 'check_out_date', 'check_in_date'] }
+                            {
+                                model: HotelBookingModel,
+                                attributes: ['hotel_id', 'number_of_rooms', 'check_out_date', 'check_in_date', 'booking_status'],
+                            }
                         ]
                     }
                 }
 
                 const info = await getModelInfo(argument);
-                console.log(info);
+                console.log("Info:", info);
                 if (!info) throw new Error(notExistErrorMessage("This Hotel", "").split(",")[0]);
                 hotelName = info.name;
 
@@ -58,11 +61,17 @@ function hotelBookingMiddleware() {
                 const startDate = new Date(value);
                 let availbleCount = availbleRoomCount.available_rooms;
 
+                const userCheckIn = new Date(value);
+                const userCheckOut = new Date(req.body.check_out_date);
+
+                console.log("Check IN:", userCheckIn);
+                console.log("Check out:", userCheckOut);
+
                 // Checking room availability for start date
                 info.HotelBookingModels.forEach((item) => {
                     const checkOutDate = new Date(item.check_out_date);
                     const checkInDate = new Date(item.check_in_date);
-                    if (startDate < checkOutDate && startDate >= checkInDate)
+                    if ((userCheckOut <= checkOutDate && userCheckIn >= checkInDate) || (userCheckIn <= checkOutDate && userCheckOut >= checkInDate))
                         availbleCount -= item.number_of_rooms
                 });
                 if (availbleCount <= 0)

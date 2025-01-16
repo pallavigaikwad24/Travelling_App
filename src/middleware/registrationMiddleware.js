@@ -44,6 +44,7 @@ function registrationValidation() {
         body("phone_number").notEmpty().withMessage(requiredErrorMessage("Phone Number")),
         body("phone_number").matches(/^[6-9]\d{9}$/).withMessage(validErrorMessage("Phone Number")),
         body("user_type").notEmpty().withMessage(requiredErrorMessage("User Type")).custom((value) => {
+            if (value == 'superAdmin') throw new Error(isUserType())
             if (value != 'admin' && value != 'user' && value != 'superAdmin') throw new Error(isUserType());
             return true;
         })

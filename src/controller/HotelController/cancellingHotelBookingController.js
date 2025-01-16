@@ -3,6 +3,7 @@ const getModelInfo = require("../../services/getModelInfo");
 const { where } = require("sequelize");
 const logger = require("../../config/logger");
 const { logErrorMessage } = require("../../services/staticMessage");
+const { getAdminCall } = require("../../services/adminNotification");
 
 const cancellingHotelBookingController = async (req, res) => {
     try {

@@ -10,10 +10,7 @@ const flightSearchController = async (req, res) => {
         const argument = {
             modelName: 'FlightModel',
             methodType: 'findAll',
-            args: {
-                where: { [Op.and]: [{ departure_airport }, { arrival_airport: destination_airport }] },
-                is_deleted: false
-            }
+            args: { where: { [Op.and]: [{ departure_airport }, { arrival_airport: destination_airport }] }, is_deleted: false }
         }
         const allResult = await getModelInfo(argument)
         return res.status(HTTP_CODE.ACCEPTED.code).send(allResult);
