@@ -2,6 +2,7 @@ const { where } = require("sequelize");
 const HTTP_CODE = require("../../services/enum");
 const getModelInfo = require("../../services/getModelInfo");
 const { logErrorMessage } = require("../../services/staticMessage");
+const logger = require("../../config/logger");
 
 const updateHotelController = async (req, res) => {
     try {

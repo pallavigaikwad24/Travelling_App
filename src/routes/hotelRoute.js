@@ -336,7 +336,7 @@ route.delete("/deleting-hotel-booking", isAuth, isAdmin, deleteHotelBookingContr
  *         description: Internal server error or unexpected error while updating hotel information.
  */
 
-route.put("/update-hotel-info", isAuth, isAdmin, hotelValidation(), validationResultFun, updateHotelController);
+route.put("/update-hotel-info", isAuth, isAdmin,updateHotelController);
 
 route.post("/add-hotel-reviews/:hotel_id", isAuth, hotelReviewMiddleware(), validationResultFun, hotelReviewController);
 

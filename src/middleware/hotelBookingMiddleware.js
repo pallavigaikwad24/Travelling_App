@@ -64,9 +64,6 @@ function hotelBookingMiddleware() {
                 const userCheckIn = new Date(value);
                 const userCheckOut = new Date(req.body.check_out_date);
 
-                console.log("Check IN:", userCheckIn);
-                console.log("Check out:", userCheckOut);
-
                 // Checking room availability for start date
                 info.HotelBookingModels.forEach((item) => {
                     const checkOutDate = new Date(item.check_out_date);

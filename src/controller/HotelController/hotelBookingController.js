@@ -6,11 +6,17 @@ const { hotelEmailHtml } = require("../../utils/emailNotificationHtmlTemplate");
 const { where } = require("sequelize");
 const { logErrorMessage } = require("../../services/staticMessage");
 const { getAdminCall } = require("../../services/adminNotification");
-
+const redisClient = require("../../config/redisConfig");
 
 const hotelBookingController = async (req, res) => {
     try {
-        const { hotel_id, check_in_date, check_out_date, number_of_rooms, total_price } = req.body;
+        const { hotel_id, check_in_date, check_out_date, number_of_rooms } = req.body;
+
+        const cacheKey = `hotelBooking_${hotel_id}_${req.user.id}`;
+        const cacheData = await redisClient.get(cacheKey);
+
+        if (cacheData) return res.status(HTTP_CODE.ACCEPTED.code).send(JSON.parse(cacheData));
+
 
         const getHotelInfoArgument = {
             modelName: 'HotelModel',
@@ -19,14 +25,12 @@ const hotelBookingController = async (req, res) => {
         }
 
         const hotelInfo = await getModelInfo(getHotelInfoArgument);
+        const total_price = hotelInfo.price_per_night * number_of_rooms;
 
         const arguments = {
             modelName: 'HotelBookingModel',
             methodType: 'create',
-            args: {
-                user_id: req.user.id, hotel_id, check_in_date, check_out_date, number_of_rooms,
-                total_price: hotelInfo.price_per_night * number_of_rooms
-            },
+            args: { user_id: req.user.id, hotel_id, check_in_date, check_out_date, number_of_rooms, total_price },
         }
         const newHotelBooking = await getModelInfo(arguments);
         const getHotelInfoArgs = {
@@ -62,6 +66,8 @@ const hotelBookingController = async (req, res) => {
             // Firebase Notification
             await getAdminCall(message);
         }
+
+        await redisClient.setEx(cacheKey, 3600, JSON.stringify(newHotelBooking));
 
         return res.status(HTTP_CODE.ACCEPTED.code).send(newHotelBooking);
     } catch (error) {

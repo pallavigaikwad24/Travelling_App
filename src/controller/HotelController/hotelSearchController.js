@@ -3,10 +3,16 @@ const getModelInfo = require("../../services/getModelInfo");
 const logger = require("../../config/logger");
 const { logErrorMessage } = require("../../services/staticMessage");
 const { Op, where, fn, col } = require("sequelize");
+const redisClient = require("../../config/redisConfig");
 
 const hotelSearchController = async (req, res) => {
     try {
         const { name, topTenRecord } = req.body;
+        const cacheKey = `hotelSearch_${name}`;
+        const cacheData = await redisClient.get(cacheKey);
+
+        if (cacheData) return res.status(HTTP_CODE.ACCEPTED.code).send(JSON.parse(cacheData));
+
         let allResult = null;
         if (topTenRecord) {
             const argument = {
@@ -40,7 +46,10 @@ const hotelSearchController = async (req, res) => {
                 },
             }
         }
-        allResult = await getModelInfo(argument)
+        // Setting Result Value into redis cache
+        allResult = await getModelInfo(argument);
+        await redisClient.setEx(cacheKey, 3600, JSON.stringify(allResult));
+
         return res.status(HTTP_CODE.ACCEPTED.code).send(allResult);
     } catch (error) {
         logger.error(logErrorMessage("Searching Hotel"), {

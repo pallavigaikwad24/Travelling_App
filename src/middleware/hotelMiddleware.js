@@ -7,13 +7,18 @@ const { default: axios } = require("axios");
 function hotelValidation() {
     return [
         body("name")
+            .notEmpty()
+            .withMessage(requiredErrorMessage("Name"))
             .isString()
             .withMessage(validErrorMessage("Name")),
 
         body("location")
+            .notEmpty()
+            .withMessage(requiredErrorMessage("Location"))
             .isString()
             .withMessage(validErrorMessage("Location")),
 
+        body("country").notEmpty().withMessage(requiredErrorMessage("Country")),
         body("country").custom(async (value) => {
             const response = await axios.get(`${process.env.COUNTRY_API}`);
             const countries = response.data.data.map(country => country.country);
@@ -21,6 +26,8 @@ function hotelValidation() {
         }),
 
         body("price_per_night")
+            .notEmpty()
+            .withMessage(requiredErrorMessage("Price per Night"))
             .isNumeric()
             .withMessage(validErrorMessage("Price per Night"))
             .custom(value => {
@@ -31,10 +38,14 @@ function hotelValidation() {
             }),
 
         body("available_rooms")
+            .notEmpty()
+            .withMessage(requiredErrorMessage("Available Rooms"))
             .isInt({ min: 1 })
             .withMessage(validErrorMessage("Available Rooms")),
 
         body("services")
+            .notEmpty()
+            .withMessage(requiredErrorMessage("Services"))
             .isJSON()
             .withMessage(validErrorMessage("Services"))
             .custom(services => {
