@@ -1,7 +1,7 @@
 const requiredErrorMessage = (value) => `Please enter ${value}!`;
 const validErrorMessage = (value) => `Please enter a valid ${value}!`;
 const existErrorMessage = (value, redirect) => `${value} already exists. Please ${redirect} to proceed.`;
-const notExistErrorMessage = (value, redirect) => `${value} does not exist. Kindly ${redirect} to proceed.`;
+const notExistErrorMessage = (value, redirect) => `${value} does not exist, Kindly ${redirect} to proceed.`;
 const passwordErrorMessage = (value) => `${value} must be at least 8 characters long and include at least one uppercase letter, 
 one lowercase letter, one digit, and one special character.`;
 const confirmMatchErrorMessage = (value) => `${value} must match the password.`;

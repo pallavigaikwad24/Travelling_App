@@ -27,7 +27,13 @@ const forgetPasswordController = async (req, res) => {
                 args: [{ password: bcrypt.hashSync(password, 8) }, { where: { email, is_deleted: false } }],
             };
 
-            await getModelInfo(updateArguments);
+            const userInfo = await getModelInfo(updateArguments);
+
+            const removeTokenArgument = {
+                modelName: 'PasswordResetToken', methodType: 'destroy',
+                args: { where: { user_id: userInfo.id } }
+            }
+            await getModelInfo(removeTokenArgument);
             return res.status(HTTP_CODE.OK.code).send({ msg: forgetPasswordSuccess() });
         }
     } catch (error) {
