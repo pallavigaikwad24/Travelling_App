@@ -1,7 +1,7 @@
 const { body } = require("express-validator");
 const { requiredErrorMessage, notAvailableErrorMessage, validErrorMessage, availableErrorMessage, notExistErrorMessage } = require("../services/staticMessage");
 const { HotelBookingModel } = require("../models");
-const { where, Op } = require("sequelize");
+const { where, Op, fn, col } = require("sequelize");
 const getModelInfo = require("../services/getModelInfo");
 
 const hotelSearchMiddleware = () => {
@@ -13,11 +13,16 @@ const hotelSearchMiddleware = () => {
             const argument = {
                 modelName: 'HotelModel',
                 methodType: "findAll",
-                args: { where: { [Op.or]: [{ name: value }, { country: value }], is_deleted: false } }
+                where: {
+                    [Op.or]: [
+                        where(fn('LOWER', col('name')), { [Op.like]: `%${value.toLowerCase()}%` }),
+                        where(fn('LOWER', col('country')), { [Op.like]: `%${value.toLowerCase()}%` }),
+                    ],
+                    is_deleted: false,
+                },
             }
             const existName = await getModelInfo(argument);
-            console.log(existName)
-            if (existName.length == 0) throw new Error(notExistErrorMessage(req.body.name, "").split(",")[0]);
+            if (existName.length == 0) throw new Error(notExistErrorMessage(req.body.name).split(",")[0]);
             return true;
         }),
         body("start_date").notEmpty().withMessage(requiredErrorMessage("Start Date")),
@@ -26,7 +31,13 @@ const hotelSearchMiddleware = () => {
                 modelName: 'HotelModel',
                 methodType: 'findOne',
                 args: {
-                    where: { [Op.or]: [{ name: req.body.name }, { country: req.body.name }], is_deleted: false },
+                    where: {
+                        [Op.or]: [
+                            where(fn('LOWER', col('name')), { [Op.like]: `%${req.body.name.toLowerCase()}%` }),
+                            where(fn('LOWER', col('country')), { [Op.like]: `%${req.body.name.toLowerCase()}%` }),
+                        ],
+                        is_deleted: false,
+                    },
                     include: [
                         { model: HotelBookingModel, attributes: ['hotel_id', 'number_of_rooms', 'check_out_date', 'check_in_date'] }
                     ]
