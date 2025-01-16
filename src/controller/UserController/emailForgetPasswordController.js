@@ -116,11 +116,17 @@ const emailController = async (req, res) => {
 
         const createArgument = {
             modelName: 'PasswordResetToken',
-            methodType: "create",
-            args: { user_id: user.dataValues.id, token, expireToken: Date.now() + 3600000 },
+            methodType: "findOrCreate",
+            args: { where: { user_id: user.id }, defaults: { token, expireToken: Date.now() + 3600000 } },
         };
 
-        await getModelInfo(createArgument);
+        const [newToken, createToken] = await getModelInfo(createArgument);
+
+        if (!createToken) {
+            newToken.token = token;
+            await newToken.save();
+        }
+
         sendMail(
             email,
             "Welcome to Our App!",
