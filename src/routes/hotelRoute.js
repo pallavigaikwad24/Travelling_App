@@ -19,6 +19,7 @@ const deleteAllHotelImageController = require("../controller/HotelController/del
 const deleteCustomeImageController = require("../controller/HotelController/deleteCustomeImageController");
 const verifyHotelController = require("../controller/HotelController/verifyHotelController");
 const verifyHotelMiddleware = require("../middleware/verifyHotelMiddleware");
+const updateHotelMiddleware = require("../middleware/updateHotelMiddleware");
 const route = Router();
 
 route.post("/gethotels", hotelRecordsController);
@@ -336,7 +337,7 @@ route.delete("/deleting-hotel-booking", isAuth, isAdmin, deleteHotelBookingContr
  *         description: Internal server error or unexpected error while updating hotel information.
  */
 
-route.put("/update-hotel-info", isAuth, isAdmin,updateHotelController);
+route.put("/update-hotel-info", isAuth, isAdmin, updateHotelMiddleware(), validationResultFun, updateHotelController);
 
 route.post("/add-hotel-reviews/:hotel_id", isAuth, hotelReviewMiddleware(), validationResultFun, hotelReviewController);
 

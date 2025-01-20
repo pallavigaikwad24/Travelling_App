@@ -27,19 +27,23 @@ const userController = async (req, res) => {
 
 const userUpdateController = async (req, res) => {
     try {
-        const { first_name, last_name, email, password, country, phone_number, user_type } = req.body;
+        const { id, first_name, last_name, email, password, country, phone_number, user_type } = req.body;
 
-        const argument = {
-            modelName: 'User',
-            methodType: 'update',
-            args: [
-                { first_name, last_name, email, password, country, phone_number, user_type },
-                { where: { user_type: 'superAdmin' } }
-            ]
+        if (req.user.user_type == 'superAdmin') {
+            const argument = {
+                modelName: 'User',
+                methodType: 'update',
+                args: [
+                    { first_name, last_name, email, password, country, phone_number, user_type },
+                    { where: { id } }
+                ]
+            }
+
+            const updateResult = await getModelInfo(argument);
+            return res.status(HTTP_CODE.OK.code).send(updateResult);
+        } else {
+            return res.status(HTTP_CODE.FORBIDDEN.code).send(HTTP_CODE.FORBIDDEN.message);
         }
-
-        const updateResult = await getModelInfo(argument);
-        return res.status(HTTP_CODE.OK.code).send(updateResult);
     } catch (error) {
         logger.error(logErrorMessage("Updating User Info"), {
             method: req.method,
