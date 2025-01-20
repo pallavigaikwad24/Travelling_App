@@ -13,7 +13,7 @@ const updateHotelController = async (req, res) => {
             methodType: 'update',
             args: [
                 { name, location, count, price_per_night, available_rooms, services },
-                { where: { owner_id: req.user.id, is_deleted: false } }
+                { where: { owner_id: req.user.id } }
             ]
         }
         const result = await getModelInfo(argument);

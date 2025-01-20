@@ -8,9 +8,10 @@ const deleteHotelController = async (req, res) => {
     try {
         const argument = {
             modelName: 'HotelModel', methodType: 'update',
-            args: [{ is_deleted: true }, { where: { owner_id: req.user.id, id: req.body.hotel_id } }]
+            args: [{ is_deleted: true }, { where: { id: req.body.hotel_id } }]
         }
         const result = await getModelInfo(argument);
+        console.log("Result::", result);
         return res.status(HTTP_CODE.ACCEPTED.code).send(result);
     } catch (error) {
         logger.error(logErrorMessage("deleting hotel records"), {

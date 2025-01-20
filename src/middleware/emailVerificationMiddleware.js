@@ -13,7 +13,7 @@ function emailVerficationMiddleware() {
             const argument = {
                 modelName: 'EmailVerificationToken',
                 methodType: 'findOne',
-                args: { where: { token: value, is_deleted: false } }
+                args: { where: { token: value } }
             }
 
             const isExists = await getModelInfo(argument);

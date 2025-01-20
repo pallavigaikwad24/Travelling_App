@@ -23,6 +23,7 @@ const hotelSearchController = async (req, res) => {
                         [Op.or]: [
                             where(fn('LOWER', col('name')), { [Op.like]: `%${name.toLowerCase()}%` }),
                             where(fn('LOWER', col('country')), { [Op.like]: `%${name.toLowerCase()}%` }),
+                            where(fn('LOWER', col('location')), { [Op.like]: `%${name.toLowerCase()}%` }),
                         ],
                         is_deleted: false,
                     },
@@ -41,6 +42,7 @@ const hotelSearchController = async (req, res) => {
                     [Op.or]: [
                         where(fn('LOWER', col('name')), { [Op.like]: `%${name.toLowerCase()}%` }),
                         where(fn('LOWER', col('country')), { [Op.like]: `%${name.toLowerCase()}%` }),
+                        where(fn('LOWER', col('location')), { [Op.like]: `%${name.toLowerCase()}%` }),
                     ],
                     is_deleted: false,
                 },

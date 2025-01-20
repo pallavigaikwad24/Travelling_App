@@ -21,7 +21,7 @@ const flightSearchMiddleware = () => {
             const argument = {
                 modelName: 'FlightModel',
                 methodType: "findAll",
-                args: { where: { departure_airport: value, is_deleted: false } }
+                args: { where: { departure_airport: value } }
             }
             const existName = await getModelInfo(argument)
             if (!existName) throw new Error(notAvailableErrorMessage(value, "Flights"))
@@ -44,7 +44,7 @@ const flightSearchMiddleware = () => {
                 args: {
                     where: {
                         [Op.and]: [{ departure_airport: req.body.departure_airport },
-                        { arrival_airport: req.body.destination_airport }], is_deleted: false
+                        { arrival_airport: req.body.destination_airport }]
                     },
                     include: [
                         { model: FlightBookingModel, attributes: ['flight_id', 'number_of_seats',] }
@@ -54,7 +54,7 @@ const flightSearchMiddleware = () => {
             const info = await getModelInfo(argument);
             const getAvailableSeats = {
                 modelName: 'FlightModel', methodType: 'findOne',
-                args: { attributes: ['seats_available'], where: { id: info.id, is_deleted: false } }
+                args: { attributes: ['seats_available'], where: { id: info.id } }
             }
             const availableSeatCount = await getModelInfo(getAvailableSeats);
 

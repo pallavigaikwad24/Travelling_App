@@ -14,7 +14,7 @@ const updateFlightController = async (req, res) => {
             args: [{
                 flight_number, airline, departure_airport, arrival_airport, departure_date, departure_time, arrival_date,
                 arrival_time, price, seats_available
-            }, { where: { owner_id: req.user.id, is_deleted: false } }]
+            }, { where: { owner_id: req.user.id } }]
         }
         const result = await getModelInfo(argument);
         return res.status(HTTP_CODE.ACCEPTED.code).send(result);

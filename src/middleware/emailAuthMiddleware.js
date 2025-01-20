@@ -14,7 +14,7 @@ function emailAuthMiddleware() {
             const argument = {
                 modelName: 'User',
                 methodType: 'findOne',
-                args: { where: { email: value, is_deleted: false } }
+                args: { where: { email: value } }
             };
 
             const isEmailValid = await getModelInfo(argument);

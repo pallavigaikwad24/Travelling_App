@@ -9,14 +9,14 @@ const deleteHotelBookingController = async (req, res) => {
 
         const isOwnerArgument = {
             modelName: 'HotelModel', methodType: 'findOne',
-            args: { where: { owner_id: req.user.id, is_deleted: false } }
+            args: { where: { owner_id: req.user.id } }
         }
         const isOwner = await getModelInfo(isOwnerArgument);
         if (isOwner) {
             const argument = {
                 modelName: 'HotelBookingModel',
                 methodType: 'update',
-                args: [{ is_deleted: true }, { where: { user_id: req.user.id, is_deleted: false } }]
+                args: [{ is_deleted: true }, { where: { user_id: req.user.id } }]
             }
             const result = await getModelInfo(argument);
             return res.status(HTTP_CODE.ACCEPTED.code).send(result)

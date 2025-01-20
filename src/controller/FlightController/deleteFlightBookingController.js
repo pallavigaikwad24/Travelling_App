@@ -10,7 +10,7 @@ const deleteFlightBookingController = async (req, res) => {
         const isOwnerArgument = {
             modelName: 'FlightModel',
             methodType: 'findOne',
-            args: { where: { owner_id: req.user.id, is_deleted: false } }
+            args: { where: { owner_id: req.user.id } }
         }
 
         const isOwner = await getModelInfo(isOwnerArgument);

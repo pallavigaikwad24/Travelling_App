@@ -36,7 +36,7 @@ function emailParamValidation() {
             const argument = {
                 modelName: 'User', methodType: 'findOne',
                 args: {
-                    where: { email: email, is_deleted: false }, attributes: ['id'],
+                    where: { email: email }, attributes: ['id'],
                     include: [{ model: OtpLogin, attributes: ['otp', 'updatedAt',] }]
                 }
             }

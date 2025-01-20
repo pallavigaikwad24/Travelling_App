@@ -9,7 +9,7 @@ const saveToken = async (req, res) => {
 
         const arguments = {
             modelName: 'FirebaseNotificationToken', methodType: "findOne",
-            args: { where: { user_id: req.user.id, is_deleted: false } }
+            args: { where: { user_id: req.user.id } }
         };
         let existingToken = await getModelInfo(arguments);
 
@@ -36,7 +36,7 @@ const getTokenController = async (req, res) => {
     try {
         const arguments = {
             modelName: 'FirebaseNotificationToken', methodType: "findOne",
-            args: { where: { user_id: req.user.id, is_deleted: false } }
+            args: { where: { user_id: req.user.id } }
         };
         const currToken = await getModelInfo(arguments);
 

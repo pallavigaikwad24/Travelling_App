@@ -11,7 +11,7 @@ const emailVerificationController = async (req, res) => {
         const tokenargs = {
             modelName: 'EmailVerificationToken',
             methodType: 'findOne',
-            args: { attributes: ['user_id'], where: { token, is_deleted: false } }
+            args: { attributes: ['user_id'], where: { token } }
         };
 
         const tokenInfo = await getModelInfo(tokenargs);
@@ -21,7 +21,7 @@ const emailVerificationController = async (req, res) => {
             methodType: 'update',
             args: [
                 { is_verified: true },
-                { where: { id: tokenInfo.user_id, is_deleted: false } }
+                { where: { id: tokenInfo.user_id } }
             ]
         }
 

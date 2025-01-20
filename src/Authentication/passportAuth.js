@@ -10,7 +10,7 @@ const initializationPassport = (passport) => {
         new Strategy(async (username, password, done) => {
             try {
                 const params = parseInt(username) ? { phone_number: username } : { email: username };
-                const argument = { modelName: 'User', methodType: "findOne", args: { where: [params], is_deleted: false } };
+                const argument = { modelName: 'User', methodType: "findOne", args: { where: [params] } };
                 const user = await getModelInfo(argument);
                 if (!user)
                     return done(null, false, { message: validErrorMessage("Phone Number or Email ID") });
@@ -31,7 +31,7 @@ const initializationPassport = (passport) => {
     passport.use('otpLogin', new CustomeStrategy(async (req, done) => {
         try {
             const username = req.params.email;
-            const argument = { modelName: 'User', methodType: "findOne", args: { where: { email: username, is_deleted: false } } }
+            const argument = { modelName: 'User', methodType: "findOne", args: { where: { email: username } } }
             const user = await getModelInfo(argument);
             if (!user)
                 return done(null, false, { message: validErrorMessage("Email ID") });
@@ -58,7 +58,7 @@ const initializationPassport = (passport) => {
             const arguments = {
                 modelName: 'User',
                 methodType: 'findOne',
-                args: { where: { id: Number(id), is_deleted: false } }
+                args: { where: { id: Number(id) } }
             }
             const user = await getModelInfo(arguments);
             done(null, user);

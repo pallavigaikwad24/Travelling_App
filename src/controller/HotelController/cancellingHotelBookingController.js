@@ -12,7 +12,7 @@ const cancellingHotelBookingController = async (req, res) => {
             methodType: 'update',
             args: [
                 { booking_status: false },
-                { where: { user_id: req.user.id, is_deleted: false } }
+                { where: { user_id: req.user.id } }
             ]
         }
         const result = await getModelInfo(argument);
@@ -20,7 +20,7 @@ const cancellingHotelBookingController = async (req, res) => {
         const notifyArgument = {
             modelName: 'FirebaseNotificationToken',
             methodType: "findOne",
-            args: { where: { user_id: req.user.id, is_deleted: false } },
+            args: { where: { user_id: req.user.id } },
         };
 
         const token = await getModelInfo(notifyArgument);

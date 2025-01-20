@@ -11,13 +11,14 @@ function hotelBookingMiddleware() {
         body("hotel_id")
             .notEmpty()
             .withMessage(requiredErrorMessage("Hotel ID"))
-            .isInt({ min: 1 })
+            .isInt()
             .withMessage(validErrorMessage("Hotel ID")),
         body("hotel_id").custom(async (value) => {
+            
             const argument = {
                 modelName: 'HotelModel',
                 methodType: "findOne",
-                args: { where: { id: value, is_deleted: false } }
+                args: { where: { id: value } }
             }
 
             const existUser = await getModelInfo(argument);
@@ -37,7 +38,7 @@ function hotelBookingMiddleware() {
                     modelName: 'HotelModel',
                     methodType: 'findOne',
                     args: {
-                        where: { id: req.body.hotel_id, is_deleted: false },
+                        where: { id: req.body.hotel_id },
                         include: [
                             {
                                 model: HotelBookingModel,
@@ -54,7 +55,7 @@ function hotelBookingMiddleware() {
 
                 const getAvailableRooms = {
                     modelName: 'HotelModel', methodType: 'findOne',
-                    args: { attributes: ['available_rooms'], where: { id: info?.id, is_deleted: false } }
+                    args: { attributes: ['available_rooms'], where: { id: info?.id } }
                 }
                 const availbleRoomCount = await getModelInfo(getAvailableRooms);
 
@@ -83,6 +84,7 @@ function hotelBookingMiddleware() {
             .notEmpty()
             .withMessage(requiredErrorMessage("Check-out Date"))
             .custom((value, { req }) => {
+                if (value?.trim() == null) throw new Error(requiredErrorMessage("Check Out Date"));
                 const checkOutDate = new Date(value);
                 const checkInDate = new Date(req.body.check_in_date);
                 if (checkOutDate <= checkInDate) {
@@ -106,18 +108,6 @@ function hotelBookingMiddleware() {
             if (roomCount > available && available > 0) throw new Error(availableErrorMessage(available, "Rooms"));
             return true;
         }),
-
-        body("total_price")
-            .notEmpty()
-            .withMessage(requiredErrorMessage("Total Price"))
-            .isNumeric()
-            .withMessage(validErrorMessage("Total Price"))
-            .custom(value => {
-                if (value <= 0) {
-                    throw new Error(validErrorMessage("Total Price"));
-                }
-                return true;
-            }),
     ];
 }
 

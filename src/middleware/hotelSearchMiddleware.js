@@ -17,6 +17,7 @@ const hotelSearchMiddleware = () => {
                     [Op.or]: [
                         where(fn('LOWER', col('name')), { [Op.like]: `%${value.toLowerCase()}%` }),
                         where(fn('LOWER', col('country')), { [Op.like]: `%${value.toLowerCase()}%` }),
+                        where(fn('LOWER', col('location')), { [Op.like]: `%${value.toLowerCase()}%` }),
                     ],
                     is_deleted: false,
                 },
@@ -35,6 +36,7 @@ const hotelSearchMiddleware = () => {
                         [Op.or]: [
                             where(fn('LOWER', col('name')), { [Op.like]: `%${req.body.name.toLowerCase()}%` }),
                             where(fn('LOWER', col('country')), { [Op.like]: `%${req.body.name.toLowerCase()}%` }),
+                            where(fn('LOWER', col('location')), { [Op.like]: `%${req.body.name.toLowerCase()}%` }),
                         ],
                         is_deleted: false,
                     },
@@ -49,7 +51,7 @@ const hotelSearchMiddleware = () => {
 
             const getAvailableRooms = {
                 modelName: 'HotelModel', methodType: 'findOne',
-                args: { attributes: ['available_rooms'], where: { id: info?.id, is_deleted: false } }
+                args: { attributes: ['available_rooms'], where: { id: info?.id } }
             }
             const availbleRoomCount = await getModelInfo(getAvailableRooms);
 

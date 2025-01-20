@@ -13,7 +13,7 @@ const forgetPasswordController = async (req, res) => {
 
         const findOneArguments = {
             modelName: 'PasswordResetToken', methodType: "findOne",
-            args: { where: { token, expireToken: { [Op.gt]: Date.now() }, is_deleted: false } },
+            args: { where: { token, expireToken: { [Op.gt]: Date.now() } } },
         };
 
         const currToken = await getModelInfo(findOneArguments);
@@ -24,7 +24,7 @@ const forgetPasswordController = async (req, res) => {
             const updateArguments = {
                 modelName: 'User',
                 methodType: "update",
-                args: [{ password: bcrypt.hashSync(password, 8) }, { where: { email, is_deleted: false } }],
+                args: [{ password: bcrypt.hashSync(password, 8) }, { where: { email } }],
             };
 
             const userInfo = await getModelInfo(updateArguments);

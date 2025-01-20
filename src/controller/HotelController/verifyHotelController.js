@@ -10,7 +10,7 @@ const verifyHotelController = async (req, res) => {
         const arguments = {
             modelName: 'HotelName',
             methodType: 'update',
-            args: [{ is_verified: true }, { where: { id: hotel_id, is_deleted: false } }]
+            args: [{ is_verified: true }, { where: { id: hotel_id } }]
         }
 
         const result = await getModelInfo(arguments);

@@ -15,7 +15,7 @@ function flightBookingMiddleware() {
                 const argument = {
                     modelName: 'FlightModel',
                     methodType: "findOne",
-                    args: { where: { id: value, is_deleted: false } }
+                    args: { where: { id: value } }
                 };
 
                 const existFlight = await getModelInfo(argument);
@@ -32,7 +32,7 @@ function flightBookingMiddleware() {
             const getAvailableFlights = {
                 modelName: 'FlightModel', methodType: 'findOne',
                 args: {
-                    where: { id: flightId, is_deleted: false },
+                    where: { id: flightId },
                     include: [{ model: FlightBookingModel, attributes: ['flight_id', 'number_of_seats'] }]
                 }
             }

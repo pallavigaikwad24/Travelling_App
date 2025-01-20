@@ -8,7 +8,7 @@ function getArgument(value, param) {
     const arguments = {
         modelName: 'User',
         methodType: "findOne",
-        args: { where: { [param]: value, is_deleted: false } }
+        args: { where: { [param]: value } }
     }
     return arguments;
 }

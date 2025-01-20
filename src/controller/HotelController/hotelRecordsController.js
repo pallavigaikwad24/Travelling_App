@@ -16,7 +16,7 @@ const hotelRecordsController = async (req, res) => {
         const argument = {
             modelName: 'HotelModel',
             methodType: 'findAll',
-            args: { where: { [Op.or]: [{ name }, { country: name }], is_deleted: false, is_verified: true }, offset, limit }
+            args: { where: { [Op.or]: [{ name }, { country: name }], is_verified: true }, offset, limit }
         }
         const allResult = await getModelInfo(argument);
         return res.status(HTTP_CODE.OK.code).send(allResult);

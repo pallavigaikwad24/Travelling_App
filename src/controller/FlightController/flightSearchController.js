@@ -15,7 +15,7 @@ const flightSearchController = async (req, res) => {
         const argument = {
             modelName: 'FlightModel',
             methodType: 'findAll',
-            args: { where: { [Op.and]: [{ departure_airport }, { arrival_airport: destination_airport }] }, is_deleted: false }
+            args: { where: { [Op.and]: [{ departure_airport }, { arrival_airport: destination_airport }] } }
         }
         const allResult = await getModelInfo(argument);
         await redisClient.setEx(cacheKey, 3600, JSON.stringify(allResult));

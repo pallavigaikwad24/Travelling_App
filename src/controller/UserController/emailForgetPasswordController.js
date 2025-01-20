@@ -110,7 +110,7 @@ const emailController = async (req, res) => {
         const { email } = req.body;
         req.session.email = email;
 
-        const arguments = { modelName: 'User', methodType: "findOne", args: { where: { email, is_deleted: false } } };
+        const arguments = { modelName: 'User', methodType: "findOne", args: { where: { email } } };
         const user = await getModelInfo(arguments);
         const token = uuidv4();
 

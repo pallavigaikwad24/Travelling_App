@@ -24,7 +24,7 @@ const flightBookingController = async (req, res) => {
         const getFlightInfoArgs = {
             modelName: 'FlightModel',
             methodType: 'findOne',
-            args: { where: newFlightBooking.flight_id, is_deleted: false }
+            args: { where: newFlightBooking.flight_id }
         }
         const getFlightInfo = await getModelInfo(getFlightInfoArgs);
 

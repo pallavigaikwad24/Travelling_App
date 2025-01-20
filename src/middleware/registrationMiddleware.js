@@ -18,7 +18,7 @@ function registrationValidation() {
         body("email").custom(async (value, { req }) => {
             console.log("req.body:", req.body);
             if (value?.trim()?.length == 0) throw new Error(requiredErrorMessage("Email ID"));
-            const argument = { modelName: 'User', methodType: "findOne", args: { where: { email: value, is_deleted: false } } };
+            const argument = { modelName: 'User', methodType: "findOne", args: { where: { email: value } } };
             const existEmail = await getModelInfo(argument);
             if (existEmail) throw new Error(existErrorMessage("Email", "Login"));
         }),

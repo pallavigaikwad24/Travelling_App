@@ -4,6 +4,8 @@ const hotelSearchController = require("../controller/HotelController/hotelSearch
 const hotelSearchMiddleware = require("../middleware/hotelSearchMiddleware");
 const flightSearchMiddleware = require("../middleware/flightSearchMiddleware");
 const flightSearchController = require("../controller/FlightController/flightSearchController");
+const priceSortFilterController = require("../controller/HotelController/priceSortFilterController");
+const customFilterHotelController = require("../controller/HotelController/customFilterHotelController");
 
 const route = Router();
 
@@ -155,5 +157,9 @@ route.post("/hotels", hotelSearchMiddleware(), validationResultFun, hotelSearchC
  */
 
 route.post("/flights", flightSearchMiddleware(), validationResultFun, flightSearchController);
+
+route.post("/filter", priceSortFilterController);
+
+route.post("/custom-filter", customFilterHotelController);
 
 module.exports = route;

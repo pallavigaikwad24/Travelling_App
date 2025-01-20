@@ -21,7 +21,7 @@ const hotelBookingController = async (req, res) => {
         const getHotelInfoArgument = {
             modelName: 'HotelModel',
             methodType: 'findOne',
-            args: { attributes: ['price_per_night'], where: { id: hotel_id, is_deleted: false } }
+            args: { attributes: ['price_per_night'], where: { id: hotel_id } }
         }
 
         const hotelInfo = await getModelInfo(getHotelInfoArgument);
@@ -36,7 +36,7 @@ const hotelBookingController = async (req, res) => {
         const getHotelInfoArgs = {
             modelName: 'HotelModel',
             methodType: 'findOne',
-            args: { where: newHotelBooking.hotel_id, attributes: ['name'], is_deleted: false }
+            args: { where: newHotelBooking.hotel_id, attributes: ['name'] }
         }
         const getHotelInfo = await getModelInfo(getHotelInfoArgs);
         sendMail(
@@ -49,7 +49,7 @@ const hotelBookingController = async (req, res) => {
         const notifyArgument = {
             modelName: 'FirebaseNotificationToken',
             methodType: "findOne",
-            args: { where: { user_id: req.user.id, is_deleted: false } },
+            args: { where: { user_id: req.user.id } },
         };
 
         const token = await getModelInfo(notifyArgument);
