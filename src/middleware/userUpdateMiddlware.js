@@ -4,7 +4,6 @@ const { requiredErrorMessage, validErrorMessage, existErrorMessage, passwordErro
 const getModelInfo = require("../services/getModelInfo");
 const { where } = require("sequelize");
 const { default: axios } = require("axios");
-require("dotenv").config();
 
 function userUpdateMiddleware() {
     const result = [

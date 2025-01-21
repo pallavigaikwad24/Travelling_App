@@ -4,7 +4,6 @@ const { where, Op } = require("sequelize");
 const getModelInfo = require("../services/getModelInfo");
 const { default: axios } = require("axios");
 const { FlightBookingModel } = require("../models");
-require("dotenv").config();
 
 const flightSearchMiddleware = () => {
     let available = 0;

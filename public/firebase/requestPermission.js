@@ -1,6 +1,5 @@
 import { messaging, onMessage1 } from "/firebase.js";
 import { getToken } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-messaging.js";
-require("dotenv").config();
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistration().then(function (registration) {

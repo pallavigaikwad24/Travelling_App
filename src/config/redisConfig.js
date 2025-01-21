@@ -1,6 +1,4 @@
-const { configDotenv } = require("dotenv");
 const { createClient } = require("redis");
-configDotenv();
 
 const client = createClient({
     password: process.env.password,

@@ -1,7 +1,6 @@
 const { body } = require("express-validator");
 const { requiredErrorMessage, validErrorMessage } = require("../services/staticMessage");
 const { default: axios } = require("axios");
-require("dotenv").config();
 
 function flightMiddleware() {
     return [

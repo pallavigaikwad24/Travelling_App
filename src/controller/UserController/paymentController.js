@@ -4,7 +4,6 @@ const paymentIntegration = require("../../services/paymentIntegration");
 const { logErrorMessage } = require("../../services/staticMessage");
 const { where } = require("sequelize");
 const getModelInfo = require("../../services/getModelInfo");
-require("dotenv").config();
 
 const paymentController = async (req, res) => {
     try {

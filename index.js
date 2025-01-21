@@ -2,7 +2,6 @@ const express = require("express");
 const route = require("./src/routes/index.js");
 const app = express();
 const path = require("path");
-require("dotenv").config();
 const passportAuthMiddleware = require("./src/middleware/passportAuth.js")
 const pageNotFoundController = require("./src/controller/pageNotFoundController.js");
 const serverCrashPreventMiddleware = require("./src/middleware/serverCrashPreventMiddleware.js");
