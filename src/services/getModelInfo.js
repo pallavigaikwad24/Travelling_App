@@ -14,9 +14,12 @@ const getModelInfo = async ({ modelName, methodType, args }) => {
     args[1]['returning'] = true;
     args[1].where['is_deleted'] = false;
     return await getModel[methodType](...args);
+  } else if (args == undefined) {
+    return await getModel[methodType]();
   } else {
-    if (methodType != 'create')
+    if (methodType != 'create' || !args.where.is_deleted)
       args.where['is_deleted'] = false;
+
     return await getModel[methodType](args);
   }
 };

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const flightController = require("../controller/FlightController/flightController");
 const flightBookingController = require("../controller/FlightController/flightBookingController");
-const { isAuth, isAdmin } = require("../middleware/loginPassportMiddleware");
+const { isAuth, isAdmin, isSuperAdmin } = require("../middleware/loginPassportMiddleware");
 const flightMiddleware = require("../middleware/flightMiddleware");
 const flightBookingMiddleware = require("../middleware/flightBookingMiddleware");
 const validationResultFun = require("../middleware/validationFun");
@@ -9,8 +9,11 @@ const deleteFlightController = require("../controller/FlightController/deleteFli
 const cancellingFlightBookingController = require("../controller/FlightController/cancellingFlightBookingController");
 const deleteFlightBookingController = require("../controller/FlightController/deleteFlightBookingController");
 const updateFlightController = require("../controller/FlightController/updateFlightController");
+const flightInfoController = require("../controller/FlightController/flightInfoController");
 
 const route = Router();
+
+route.get("/get-all-flights", isSuperAdmin, flightInfoController);
 
 /**
  * @swagger

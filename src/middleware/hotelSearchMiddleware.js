@@ -18,8 +18,7 @@ const hotelSearchMiddleware = () => {
                         where(fn('LOWER', col('name')), { [Op.like]: `%${value.toLowerCase()}%` }),
                         where(fn('LOWER', col('country')), { [Op.like]: `%${value.toLowerCase()}%` }),
                         where(fn('LOWER', col('location')), { [Op.like]: `%${value.toLowerCase()}%` }),
-                    ],
-                    is_deleted: false,
+                    ]
                 },
             }
             const existName = await getModelInfo(argument);
@@ -37,8 +36,7 @@ const hotelSearchMiddleware = () => {
                             where(fn('LOWER', col('name')), { [Op.like]: `%${req.body.name.toLowerCase()}%` }),
                             where(fn('LOWER', col('country')), { [Op.like]: `%${req.body.name.toLowerCase()}%` }),
                             where(fn('LOWER', col('location')), { [Op.like]: `%${req.body.name.toLowerCase()}%` }),
-                        ],
-                        is_deleted: false,
+                        ]
                     },
                     include: [
                         { model: HotelBookingModel, attributes: ['hotel_id', 'number_of_rooms', 'check_out_date', 'check_in_date'] }

@@ -9,7 +9,6 @@ const userController = async (req, res) => {
         const argument = {
             modelName: 'User',
             methodType: 'findAll',
-            args: { where: { is_deleted: false } }
         }
         const allUsers = await getModelInfo(argument);
         return res.status(HTTP_CODE.OK.code).send(allUsers)

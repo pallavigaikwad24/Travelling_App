@@ -20,9 +20,12 @@ const deleteCustomeImageController = require("../controller/HotelController/dele
 const verifyHotelController = require("../controller/HotelController/verifyHotelController");
 const verifyHotelMiddleware = require("../middleware/verifyHotelMiddleware");
 const updateHotelMiddleware = require("../middleware/updateHotelMiddleware");
+const hotelInfoController = require("../controller/HotelController/hotelInfoController");
 const route = Router();
 
-route.post("/gethotels", hotelRecordsController);
+route.post("/gethotels", isSuperAdmin, hotelRecordsController);
+
+route.get("/get-all-hotels", isSuperAdmin, hotelInfoController);
 
 /**
  * @swagger
