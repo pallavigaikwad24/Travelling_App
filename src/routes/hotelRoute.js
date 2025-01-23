@@ -21,6 +21,7 @@ const verifyHotelController = require("../controller/HotelController/verifyHotel
 const verifyHotelMiddleware = require("../middleware/verifyHotelMiddleware");
 const updateHotelMiddleware = require("../middleware/updateHotelMiddleware");
 const hotelInfoController = require("../controller/HotelController/hotelInfoController");
+const { deleteMiddleware, userCancelMiddleware } = require("../middleware/deleteMiddleware");
 const route = Router();
 
 route.post("/gethotels", isSuperAdmin, hotelRecordsController);
@@ -240,7 +241,7 @@ route.delete("/delete-custome-image", isAuth, isAdmin, deleteCustomeImageMiddlew
  *         description: Internal server error or unexpected error while deleting the hotel information.
  */
 
-route.delete("/delete-hotel-info", isAuth, isAdmin, deleteHotelController);
+route.delete("/delete-hotel-info", isAuth, isAdmin, deleteMiddleware("hotel_id"), validationResultFun, deleteHotelController);
 
 /**
  * @swagger
@@ -263,7 +264,7 @@ route.delete("/delete-hotel-info", isAuth, isAdmin, deleteHotelController);
  *         description: Internal server error or unexpected error during booking cancellation.
  */
 
-route.patch("/canceling-hotel-booking", isAuth, cancellingHotelBookingController);
+route.patch("/canceling-hotel-booking", isAuth, userCancelMiddleware("hotel_id"), validationResultFun, cancellingHotelBookingController);
 
 /**
  * @swagger
@@ -286,7 +287,7 @@ route.patch("/canceling-hotel-booking", isAuth, cancellingHotelBookingController
  *         description: Internal server error or unexpected error during deletion.
  */
 
-route.delete("/deleting-hotel-booking", isAuth, isAdmin, deleteHotelBookingController);
+route.delete("/deleting-hotel-booking", isAuth, isAdmin, userCancelMiddleware("hotel_id"), validationResultFun, deleteHotelBookingController);
 
 /**
  * @swagger

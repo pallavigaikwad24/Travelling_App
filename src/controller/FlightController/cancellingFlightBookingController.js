@@ -9,7 +9,7 @@ const cancellingFlightBookingController = async (req, res) => {
         const argument = {
             modelName: 'FlightBookingModel',
             methodType: 'update',
-            args: [{ booking_status: false }, { where: { user_id: req.user.id } }]
+            args: [{ booking_status: false }, { where: { user_id: req.user.id, flight_id: req.body.flight_id } }]
         }
         const result = await getModelInfo(argument);
         return res.status(HTTP_CODE.ACCEPTED.code).send(result)

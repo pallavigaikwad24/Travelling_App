@@ -12,7 +12,7 @@ const cancellingHotelBookingController = async (req, res) => {
             methodType: 'update',
             args: [
                 { booking_status: false },
-                { where: { user_id: req.user.id } }
+                { where: { user_id: req.user.id, hotel_id: req.body.hotel_id } }
             ]
         }
         const result = await getModelInfo(argument);

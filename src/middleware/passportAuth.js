@@ -10,4 +10,4 @@ router.use(passport.initialize());
 router.use(session({ key: "user_session", store: sessionStore, secret: process.env.SECRET_KEY, resave: false, saveUninitialized: false }));
 router.use(passport.session());
 
-module.exports = router;
+module.exports = router

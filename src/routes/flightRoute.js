@@ -10,6 +10,7 @@ const cancellingFlightBookingController = require("../controller/FlightControlle
 const deleteFlightBookingController = require("../controller/FlightController/deleteFlightBookingController");
 const updateFlightController = require("../controller/FlightController/updateFlightController");
 const flightInfoController = require("../controller/FlightController/flightInfoController");
+const { deleteMiddleware, userCancelMiddleware } = require("../middleware/deleteMiddleware");
 
 const route = Router();
 
@@ -150,7 +151,7 @@ route.post("/flight-booking", isAuth, flightBookingMiddleware(), validationResul
  *         description: Forbidden. The user is not authorized to delete the flight.
  */
 
-route.delete("/delete-flight-info", isAuth, isAdmin, deleteFlightController);
+route.delete("/delete-flight-info", isAuth, isAdmin, deleteMiddleware("flight_id"), validationResultFun, deleteFlightController);
 
 /**
  * @swagger
@@ -171,7 +172,7 @@ route.delete("/delete-flight-info", isAuth, isAdmin, deleteFlightController);
  *         description: Forbidden. The user is not authorized to cancel the booking.
  */
 
-route.patch("/canceling-flight-booking", isAuth, cancellingFlightBookingController);
+route.patch("/canceling-flight-booking", isAuth, userCancelMiddleware("flight_id"), validationResultFun, cancellingFlightBookingController);
 
 /**
  * @swagger
@@ -194,7 +195,7 @@ route.patch("/canceling-flight-booking", isAuth, cancellingFlightBookingControll
  *         description: Flight not found for the user.
  */
 
-route.delete("/deleting-flight-booking", isAuth, isAdmin, deleteFlightBookingController);
+route.delete("/deleting-flight-booking", isAuth, isAdmin, userCancelMiddleware("flight_id"), validationResultFun, deleteFlightBookingController);
 
 /**
  * @swagger

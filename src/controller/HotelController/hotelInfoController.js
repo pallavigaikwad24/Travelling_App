@@ -10,7 +10,6 @@ const hotelInfoController = async (req, res) => {
             modelName: 'HotelModel',
             methodType: 'findAll',
         }
-
         const allHotels = await getModelInfo(argument);
         return res.status(HTTP_CODE.OK.code).send(allHotels);
     } catch (error) {

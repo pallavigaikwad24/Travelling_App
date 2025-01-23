@@ -7,7 +7,8 @@ const { logErrorMessage } = require("../../services/staticMessage");
 const deleteFlightController = async (req, res) => {
     try {
         const argument = {
-            modelName: 'FlightModel', methodType: 'update', args: [{ is_deleted: true }, { where: { owner_id: req.user.id } }]
+            modelName: 'FlightModel', methodType: 'update',
+            args: [{ is_deleted: true }, { where: { owner_id: req.user.id, id: req.body.id } }]
         }
         const result = await getModelInfo(argument);
         return res.status(HTTP_CODE.ACCEPTED.code).send(result);
