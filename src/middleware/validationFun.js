@@ -7,7 +7,6 @@ const getModelInfo = require("../services/getModelInfo");
 
 async function validationResultFun(req, res, next) {
     try {
-
         const result = validationResult(req);
         let error = null;
         if (!result.isEmpty()) {
