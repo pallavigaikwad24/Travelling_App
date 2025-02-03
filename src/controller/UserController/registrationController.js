@@ -29,7 +29,7 @@ const registrationController = async (req, res) => {
         const tokenArgument = {
             modelName: 'EmailVerificationToken',
             methodType: 'findOrCreate',
-            args: { where: { user_id: newUser?.id }, defaults: { token: token } }
+            args: { where: { user_id: newUser?.id, is_deleted: false }, defaults: { token: token } }
         }
         const [newToken, createToken] = await getModelInfo(tokenArgument);
 

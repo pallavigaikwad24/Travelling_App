@@ -9,7 +9,6 @@ const cors = require("cors");
 const { setupLogging } = require("./src/middleware/setlog.js");
 setupLogging();
 
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 const corsOptions = {
