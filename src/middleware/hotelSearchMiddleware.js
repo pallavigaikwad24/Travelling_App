@@ -81,6 +81,7 @@ const hotelSearchMiddleware = () => {
         body("rooms").isNumeric().withMessage(validErrorMessage("Room Count")),
         body("rooms").custom((value) => {
             const roomCount = parseInt(value);
+            if (roomCount <= 0) throw new Error(validErrorMessage("Room Count"));
             if (available == 0) throw new Error(notAvailableErrorMessage(req.body.name, "Hotels"));
             if (roomCount > available && available > 0) throw new Error(availableErrorMessage(available, "Rooms"));
             return true;

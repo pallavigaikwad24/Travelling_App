@@ -8,6 +8,7 @@ const priceSortFilterController = require("../controller/HotelController/priceSo
 const customFilterHotelController = require("../controller/HotelController/customFilterHotelController");
 const priceFilterMiddleware = require("../middleware/priceFilterMiddleware");
 const customHotelFilterMiddleware = require("../middleware/customHotelFilterMiddleware");
+const hotelListMiddleware = require("../middleware/hotelListMiddleware");
 
 const route = Router();
 
@@ -69,6 +70,8 @@ const route = Router();
  */
 
 route.post("/hotels", hotelSearchMiddleware(), validationResultFun, hotelSearchController);
+
+route.post("/hotel-list", hotelListMiddleware(), validationResultFun, hotelSearchController);
 
 /**
  * @swagger
