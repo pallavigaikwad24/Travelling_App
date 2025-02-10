@@ -1,6 +1,7 @@
 const passport = require("passport");
 const HTTP_CODE = require("../services/enum");
-const { notPermisionErrorMessage } = require("../services/staticMessage");
+const { notPermisionErrorMessage, logErrorMessage } = require("../services/staticMessage");
+const logger = require("../config/logger");
 
 const loginPassportMiddleware = (req, res, next) => {
     passport.authenticate("local", (error, user, info) => {
@@ -58,10 +59,10 @@ const isAdmin = (req, res, next) => {
 }
 const isSuperAdmin = (req, res, next) => {
     try {
-        if (req.user.user_type == 'superAdmin') return next();
+        if (req.user && req.user.user_type == 'superAdmin') return next();
         else return res.status(HTTP_CODE.UNAUTHORIZED.code).send({ message: notPermisionErrorMessage() })
     } catch (error) {
-        logger.error(logErrorMessage("Check Admin Authentication"), {
+        logger.error(logErrorMessage("Check Super Admin Authentication"), {
             method: req.method,
             url: `${req.get("Host")}${req.originalUrl}`,
             message: error.message,

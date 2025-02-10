@@ -22,11 +22,14 @@ const verifyHotelMiddleware = require("../middleware/verifyHotelMiddleware");
 const updateHotelMiddleware = require("../middleware/updateHotelMiddleware");
 const hotelInfoController = require("../controller/HotelController/hotelInfoController");
 const { deleteMiddleware, userCancelMiddleware } = require("../middleware/deleteMiddleware");
+const singleHotelController = require("../controller/HotelController/singleHotelController");
 const route = Router();
 
 route.post("/gethotels", isSuperAdmin, hotelRecordsController);
 
 route.get("/get-all-hotels", isSuperAdmin, hotelInfoController);
+
+route.get("/:hotel_id", isAuth, singleHotelController);
 
 /**
  * @swagger

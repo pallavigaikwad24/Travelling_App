@@ -9,9 +9,6 @@ const { sequelize } = require("../models");
 
 const getModelInfo = async ({ modelName, methodType, args }) => {
   const getModel = sequelize.models[modelName];
-
-  console.log("14::", getModel);
-
   if (Array.isArray(args)) {
     args[1]['returning'] = true;
     args[1].where['is_deleted'] = false;
@@ -19,10 +16,12 @@ const getModelInfo = async ({ modelName, methodType, args }) => {
   } else if (args == undefined) {
     return await getModel[methodType]();
   } else {
-    console.log("20::", args, methodType, modelName)
     if (methodType != 'create' || methodType != 'findOrCreate' || !args?.where?.is_deleted) {
       args.where ? args.where['is_deleted'] = false : "";
     }
+    console.log("MethodType:", methodType, modelName, args);
+    const result = await getModel[methodType](args);
+    console.log("23::", result);
     return await getModel[methodType](args);
   }
 };
