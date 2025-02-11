@@ -2,7 +2,6 @@ const { body } = require("express-validator");
 const { requiredErrorMessage, notAvailableErrorMessage, validErrorMessage, availableErrorMessage } = require("../services/staticMessage");
 const { where, Op } = require("sequelize");
 const getModelInfo = require("../services/getModelInfo");
-const { default: axios } = require("axios");
 const { FlightBookingModel } = require("../models");
 
 const flightSearchMiddleware = () => {
@@ -11,8 +10,12 @@ const flightSearchMiddleware = () => {
         body("departure_airport").notEmpty().withMessage(requiredErrorMessage("Departure Airport")),
         body("departure_airport").custom(async (value, { req }) => {
             if (value?.trim()?.length == 0) throw new Error(requiredErrorMessage("Departure Airport"));
-            const response = await axios(`${process.env.API_URL}/airports?access_key=${process.env.AIRPORT_API_KEY}`);
-            const result = response.data.data.find((item) =>
+            const arguments = {
+                methodType: 'findAll',
+                modelName: 'AirportModel'
+            }
+            const response = await getModelInfo(arguments);
+            const result = response.find((item) =>
                 item?.icao_code?.toLocaleLowerCase()?.startsWith(value?.toLocaleLowerCase())
             );
             if (!result) throw new Error(validErrorMessage("Departure Airport Name"));
@@ -23,17 +26,23 @@ const flightSearchMiddleware = () => {
                 args: { where: { departure_airport: value } }
             }
             const existName = await getModelInfo(argument)
-            if (!existName) throw new Error(notAvailableErrorMessage(value, "Flights"))
+            if (!existName) throw new Error(notAvailableErrorMessage(value, "Flights"));
+            return true;
 
         }),
         body("destination_airport").notEmpty().withMessage(requiredErrorMessage("Destination Airport")),
         body("destination_airport").custom(async (value, { req }) => {
             if (value?.trim()?.length == 0) throw new Error(requiredErrorMessage("Destination Airport"));
-            const response = await axios(`${process.env.API_URL}/airports?access_key=${process.env.AIRPORT_API_KEY}`);
-            const result = response.data.data.find((item) =>
+            const arguments = {
+                methodType: 'findAll',
+                modelName: 'AirportModel'
+            }
+            const response = await getModelInfo(arguments);
+            const result = response.find((item) =>
                 item?.icao_code?.toLocaleLowerCase()?.startsWith(value?.toLocaleLowerCase())
             );
             if (!result) throw new Error(validErrorMessage("Destination Airport Name"));
+            return true;
         }),
         body("start_date").notEmpty().withMessage(requiredErrorMessage("Start Date")),
         body("start_date").custom(async (value, { req }) => {
@@ -51,9 +60,10 @@ const flightSearchMiddleware = () => {
                 }
             }
             const info = await getModelInfo(argument);
+            if (!info) throw new Error(notAvailableErrorMessage('', "Flights"))
             const getAvailableSeats = {
                 modelName: 'FlightModel', methodType: 'findOne',
-                args: { attributes: ['seats_available'], where: { id: info.id } }
+                args: { attributes: ['seats_available'], where: { id: info?.id } }
             }
             const availableSeatCount = await getModelInfo(getAvailableSeats);
 
@@ -73,14 +83,17 @@ const flightSearchMiddleware = () => {
             else
                 available = availbleCount;
 
+            return true;
+
         }),
         body("total_seats").notEmpty().withMessage(requiredErrorMessage("Seats Count")),
-        body("total_seats").isNumeric().withMessage(validErrorMessage("Seats Count")),
         body("total_seats").custom((value) => {
+            if (value < 0) throw new Error(validErrorMessage("Seats Count"));
+            console.log("Value 89:", value, available);
             if (value > available && available > 0)
                 throw new Error(availableErrorMessage(available, "Flights"));
-            else
-                throw new Error(notAvailableErrorMessage(req.body.name, "Flights"))
+
+            return true;
         })
     ]
 }

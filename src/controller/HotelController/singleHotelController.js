@@ -8,15 +8,13 @@ const { ReviewHotelModel } = require("../../models");
 const singleHotelController = async (req, res) => {
     try {
         const { hotel_id } = req.params;
-        console.log("Hotel id:", hotel_id);
+       
         const argument = {
             modelName: 'HotelModel',
             methodType: 'findOne',
             args: { where: { id: Number(hotel_id) }, include: [{ model: ReviewHotelModel }] }
         }
         const singleHotels = await getModelInfo(argument);
-
-        console.log("Single:", singleHotels);
         return res.status(HTTP_CODE.OK.code).send(singleHotels);
     } catch (error) {
         logger.error(logErrorMessage("Getting single Hotel Info"), {

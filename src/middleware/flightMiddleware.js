@@ -1,6 +1,7 @@
 const { body } = require("express-validator");
 const { requiredErrorMessage, validErrorMessage } = require("../services/staticMessage");
 const { default: axios } = require("axios");
+const getModelInfo = require("../services/getModelInfo");
 
 function flightMiddleware() {
     return [
@@ -23,8 +24,12 @@ function flightMiddleware() {
             .withMessage(validErrorMessage("Departure Airport")),
         body("departure_airport").custom(async (value, { req }) => {
             if (value?.trim()?.length == 0) throw new Error(requiredErrorMessage("Departure Airport"));
-            const response = await axios(`${process.env.API_URL}/airports?access_key=${process.env.AIRPORT_API_KEY}`);
-            const result = response.data.data.find((item) =>
+            const arguments = {
+                methodType: 'findAll',
+                modelName: 'AirportModel'
+            }
+            const response = await getModelInfo(arguments);
+            const result = response.find((item) =>
                 item?.icao_code?.toLocaleLowerCase()?.startsWith(value?.toLocaleLowerCase())
             );
             if (!result) throw new Error(validErrorMessage("Departure Airport Name"));
@@ -37,8 +42,12 @@ function flightMiddleware() {
             .withMessage(validErrorMessage("Arrival Airport")),
         body("arrival_airport").custom(async (value, { req }) => {
             if (value?.trim()?.length == 0) throw new Error(requiredErrorMessage("Arrival Airport"));
-            const response = await axios(`${process.env.API_URL}/airports?access_key=${process.env.AIRPORT_API_KEY}`);
-            const result = response.data.data.find((item) =>
+            const arguments = {
+                methodType: 'findAll',
+                modelName: 'AirportModel'
+            }
+            const response = await getModelInfo(arguments);
+            const result = response.find((item) =>
                 item?.icao_code?.toLocaleLowerCase()?.startsWith(value?.toLocaleLowerCase())
             );
             if (!result) throw new Error(validErrorMessage("Arrival Airport Name"));

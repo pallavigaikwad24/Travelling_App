@@ -19,9 +19,6 @@ const getModelInfo = async ({ modelName, methodType, args }) => {
     if (methodType != 'create' || methodType != 'findOrCreate' || !args?.where?.is_deleted) {
       args.where ? args.where['is_deleted'] = false : "";
     }
-    console.log("MethodType:", methodType, modelName, args);
-    const result = await getModel[methodType](args);
-    console.log("23::", result);
     return await getModel[methodType](args);
   }
 };

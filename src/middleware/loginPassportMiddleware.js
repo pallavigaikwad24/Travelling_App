@@ -33,6 +33,7 @@ const otpPassportMiddleware = (req, res, next) => {
 
 const isAuth = (req, res, next) => {
     try {
+        console.log("user 36:", req.user);
         if (req.user) return next();
         else return res.status(HTTP_CODE.UNAUTHORIZED.code).send(HTTP_CODE.UNAUTHORIZED.message)
 
