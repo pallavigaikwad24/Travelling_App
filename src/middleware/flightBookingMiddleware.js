@@ -45,18 +45,6 @@ function flightBookingMiddleware() {
             if (availbleCount < value) throw new Error(availableErrorMessage(availbleCount, "Seats"))
 
         }),
-
-        body("total_price")
-            .notEmpty()
-            .withMessage(requiredErrorMessage("Total Price"))
-            .isNumeric()
-            .withMessage(validErrorMessage("Total Price"))
-            .custom((value) => {
-                if (value <= 0) {
-                    throw new Error(validErrorMessage("Total Price"));
-                }
-                return true;
-            }),
     ];
 }
 

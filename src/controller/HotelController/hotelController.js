@@ -8,14 +8,14 @@ const { where } = require("sequelize");
 
 const hotelController = async (req, res) => {
     try {
-        const { name, location, address, country, price_per_night, available_rooms, services } = req.body;
+        const { name, location,  country, price_per_night, available_rooms, services } = req.body;
         const imagePaths = [];
         const userId = req.user.id;
 
         const arguments = {
             modelName: 'HotelModel',
             methodType: 'create',
-            args: { owner_id: req.user.id, name, location, address, country, price_per_night, available_rooms, services }
+            args: { owner_id: req.user.id, name, location,  country, price_per_night, available_rooms, services }
         }
 
         const newHotelInfo = await getModelInfo(arguments);

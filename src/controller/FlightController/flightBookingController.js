@@ -8,11 +8,9 @@ const redisClient = require("../../config/redisConfig");
 
 const flightBookingController = async (req, res) => {
     try {
-        const { flight_id, number_of_seats, total_price } = req.body;
-        const cacheKey = `flightBooking_${flight_id}_${req.user.id}`;
-        const cacheData = await redisClient.get(cacheKey);
+        const { flight_id, number_of_seats, price } = req.body;
+        const total_price = price * number_of_seats;
 
-        if (cacheData) return res.status(HTTP_CODE.ACCEPTED.code).send(JSON.parse(cacheData));
         const arguments = {
             modelName: 'FlightBookingModel',
             methodType: "create",
@@ -20,15 +18,12 @@ const flightBookingController = async (req, res) => {
         }
 
         const newFlightBooking = await getModelInfo(arguments);
-
         const getFlightInfoArgs = {
             modelName: 'FlightModel',
             methodType: 'findOne',
             args: { where: newFlightBooking.flight_id }
         }
         const getFlightInfo = await getModelInfo(getFlightInfoArgs);
-
-        await redisClient.setEx(cacheKey, 3600, JSON.stringify(newFlightBooking));
 
         sendMail(
             req.user.email,

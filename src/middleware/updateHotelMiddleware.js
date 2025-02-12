@@ -1,7 +1,6 @@
 const { body } = require("express-validator");
 const { requiredErrorMessage, validErrorMessage, notAvailableErrorMessage, imageTypeErrorMessage, requiredImageErrorMessage, fileSizeErrorMessage, fileCountErrorMessage } = require("../services/staticMessage");
 const getModelInfo = require("../services/getModelInfo");
-const { HotelModel } = require("../models");
 const { default: axios, options } = require("axios");
 
 function updateHotelMiddleware() {
