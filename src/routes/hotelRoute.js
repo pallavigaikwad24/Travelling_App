@@ -25,9 +25,9 @@ const { deleteMiddleware, userCancelMiddleware } = require("../middleware/delete
 const singleHotelController = require("../controller/HotelController/singleHotelController");
 const route = Router();
 
-route.post("/gethotels", isSuperAdmin, hotelRecordsController);
+route.post("/gethotels", isAuth, hotelRecordsController);
 
-route.get("/get-all-hotels", isSuperAdmin, hotelInfoController);
+route.get("/get-all-hotels", isAuth, hotelInfoController);
 
 route.get("/:hotel_id", isAuth, singleHotelController);
 

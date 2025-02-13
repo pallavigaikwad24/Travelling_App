@@ -20,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     hotel_id: DataTypes.INTEGER,
     reviewText: DataTypes.TEXT,
     rating: DataTypes.INTEGER,
-    is_deleted: DataTypes.BOOLEAN
+    is_deleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'ReviewHotelModel',

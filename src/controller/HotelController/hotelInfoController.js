@@ -2,6 +2,7 @@ const logger = require("../../config/logger");
 const HTTP_CODE = require("../../services/enum");
 const getModelInfo = require("../../services/getModelInfo");
 const { logErrorMessage } = require("../../services/staticMessage");
+const { ReviewHotelModel } = require("../../models");
 
 const hotelInfoController = async (req, res) => {
     try {
@@ -9,6 +10,7 @@ const hotelInfoController = async (req, res) => {
         const argument = {
             modelName: 'HotelModel',
             methodType: 'findAll',
+            args: { include: { model: ReviewHotelModel }, order: [[ReviewHotelModel, 'rating', 'ASC']] }
         }
         const allHotels = await getModelInfo(argument);
         return res.status(HTTP_CODE.OK.code).send(allHotels);

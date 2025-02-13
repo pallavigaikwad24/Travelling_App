@@ -12,11 +12,12 @@ const hotelRecordsController = async (req, res) => {
         // const limit = 10;
         const offset = 0;
         const limit = (count * 10) + 10;
+        // args: { where: { [Op.or]: [{ name }, { country: name }], is_verified: true }, offset, limit }
 
         const argument = {
             modelName: 'HotelModel',
             methodType: 'findAll',
-            args: { where: { [Op.or]: [{ name }, { country: name }], is_verified: true }, offset, limit }
+            args: { where: { [Op.or]: [{ name }, { country: name }] }, offset, limit }
         }
         const allResult = await getModelInfo(argument);
         return res.status(HTTP_CODE.OK.code).send(allResult);
