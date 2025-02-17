@@ -3,22 +3,19 @@ const logger = require("../../config/logger");
 const HTTP_CODE = require("../../services/enum");
 const getModelInfo = require("../../services/getModelInfo");
 const { logErrorMessage } = require("../../services/staticMessage");
-const { ReviewHotelModel } = require("../../models");
 
-const singleHotelController = async (req, res) => {
+const propertyGetController = async (req, res) => {
     try {
-        const { hotel_id } = req.params;
-        console.log("Inside single", hotel_id);
-
+        console.log("Inside property controller")
         const argument = {
             modelName: 'HotelModel',
-            methodType: 'findOne',
-            args: { where: { id: Number(hotel_id) }, include: [{ model: ReviewHotelModel }] }
+            methodType: 'findAll',
+            args: { where: { owner_id: Number(req.user.id) } }
         }
-        const singleHotels = await getModelInfo(argument);
-        return res.status(HTTP_CODE.OK.code).send(singleHotels);
+        const property = await getModelInfo(argument);
+        return res.status(HTTP_CODE.OK.code).send(property);
     } catch (error) {
-        logger.error(logErrorMessage("Getting single Hotel Info"), {
+        logger.error(logErrorMessage("Getting property Hotel Info"), {
             method: req.method,
             url: `${req.get("Host")}${req.originalUrl}`,
             message: error.message,
@@ -29,4 +26,4 @@ const singleHotelController = async (req, res) => {
     }
 }
 
-module.exports = singleHotelController;
+module.exports = propertyGetController;

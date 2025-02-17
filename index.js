@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 const corsOptions = {
     origin: "http://localhost:5173", // Your React app's URL
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Allowed methods
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Allowed headers
     credentials: true, // Important: Allows credentials (cookies, auth headers)
 };

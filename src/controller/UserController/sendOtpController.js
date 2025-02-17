@@ -9,7 +9,7 @@ const getModelInfo = require("../../services/getModelInfo");
 const sendOtpController = async (req, res) => {
     try {
 
-        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otp = Math.floor(1000 + Math.random() * 9000);
 
         const userArgs = {
             modelName: 'User',

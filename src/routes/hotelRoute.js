@@ -20,16 +20,23 @@ const deleteCustomeImageController = require("../controller/HotelController/dele
 const verifyHotelController = require("../controller/HotelController/verifyHotelController");
 const verifyHotelMiddleware = require("../middleware/verifyHotelMiddleware");
 const updateHotelMiddleware = require("../middleware/updateHotelMiddleware");
-const hotelInfoController = require("../controller/HotelController/hotelInfoController");
+const { hotelInfoController, hotelInfoVerifyController } = require("../controller/HotelController/hotelInfoController");
 const { deleteMiddleware, userCancelMiddleware } = require("../middleware/deleteMiddleware");
 const singleHotelController = require("../controller/HotelController/singleHotelController");
+const propertyGetController = require("../controller/HotelController/propertyGetController");
+const hotelBookingGetController = require("../controller/HotelController/hotelBookingGetController");
 const route = Router();
 
 route.post("/gethotels", isAuth, hotelRecordsController);
 
 route.get("/get-all-hotels", isAuth, hotelInfoController);
+route.get("/get-hotels/verify", isAuth, isSuperAdmin, hotelInfoVerifyController);
 
 route.get("/:hotel_id", isAuth, singleHotelController);
+
+route.get("/property/get-property", isAuth, isAdmin, propertyGetController);
+
+route.get("/hotel-booking/get-hotel-booking", isAuth, hotelBookingGetController);
 
 /**
  * @swagger

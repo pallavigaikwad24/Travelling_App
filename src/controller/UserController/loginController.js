@@ -17,9 +17,6 @@ const loginController = async (req, res) => {
     try {
         const { username, password } = req.body;
         let userInfo = null;
-
-        console.log("Login Controller::", username, password);
-
         if (username) {
             if (password) {
                 const updateArgs = {

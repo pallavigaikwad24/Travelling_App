@@ -32,8 +32,8 @@ const otpPassportMiddleware = (req, res, next) => {
 };
 
 const isAuth = (req, res, next) => {
+    console.log("35:", req.isAuthenticated());
     try {
-        console.log("user 36:", req.user);
         if (req.user) return next();
         else return res.status(HTTP_CODE.UNAUTHORIZED.code).send(HTTP_CODE.UNAUTHORIZED.message)
 
@@ -59,6 +59,7 @@ const isAdmin = (req, res, next) => {
     }
 }
 const isSuperAdmin = (req, res, next) => {
+    console.log("61:", req.user)
     try {
         if (req.user && req.user.user_type == 'superAdmin') return next();
         else return res.status(HTTP_CODE.UNAUTHORIZED.code).send({ message: notPermisionErrorMessage() })

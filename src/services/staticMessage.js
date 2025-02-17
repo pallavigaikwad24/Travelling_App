@@ -5,7 +5,7 @@ const notExistErrorMessage = (value, redirect) => `${value} does not exist, Kind
 const passwordErrorMessage = (value) => `${value} must be at least 8 characters long and include at least one uppercase letter, 
 one lowercase letter, one digit, and one special character.`;
 const confirmMatchErrorMessage = (value) => `${value} must match the password.`;
-const notAvailableErrorMessage = (value, service) => `${value} ${service} are currently unavailable.`;
+const notAvailableErrorMessage = (value, service) => `${value} ${service} currently unavailable.`;
 const availableErrorMessage = (value, service) => `Only ${value} ${service} are currently available.`;
 const expireTokenErrorMessage = () => `Your reset password token has expired. Please request a new one to proceed!"`;
 const emailverficationMessage = (value, service) => `${value} has been sent for verification. 

@@ -73,7 +73,7 @@ function hotelBookingMiddleware() {
                         availbleCount -= item.number_of_rooms
                 });
                 if (availbleCount <= 0)
-                    throw new Error(notAvailableErrorMessage(hotelName, "Hotel Rooms for this date"))
+                    throw new Error(notAvailableErrorMessage("", ""))
                 else
                     available = availbleCount;
                 return true;
